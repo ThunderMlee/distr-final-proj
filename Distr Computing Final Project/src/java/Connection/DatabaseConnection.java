@@ -1,3 +1,5 @@
+package Connection;
+
 
 
 import java.sql.Connection;
@@ -28,7 +30,7 @@ public class DatabaseConnection {
     public Connection setConnection(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/printcompany","root","");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/printmarketing","root","");
             
         }catch(Exception e){
           

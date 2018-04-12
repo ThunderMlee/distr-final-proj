@@ -15,7 +15,7 @@
         <h1>Admin Page</h1>
         <ul>
             <li> <a href="insertrecord.jsp">Create New Location</a></li>
-            <li><a href="DisplayRecord">Display Locations</a></li>
+            <li><a href="DisplayRecordServlet">Display Locations</a></li>
             
         </ul>
         

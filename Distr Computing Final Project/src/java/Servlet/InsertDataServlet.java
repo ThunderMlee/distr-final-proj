@@ -1,4 +1,7 @@
+package Servlet;
 
+
+import Connection.DatabaseConnection;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -18,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Amanda
  */
-public class InsertData extends HttpServlet {
+public class InsertDataServlet extends HttpServlet {
 
     String locationName;
     int distributionCapacity;
@@ -37,7 +40,7 @@ public class InsertData extends HttpServlet {
             dbconn = new DatabaseConnection();
             locationName = request.getParameter("locationName");
             distributionCapacity = Integer.parseInt(request.getParameter("distributionCapacity"));
-            query = "INSERT INTO locationtable"
+            query = "INSERT INTO location"
                     + "(locationName, distributionCapacity)"
                     + "values('"+locationName+"',"+distributionCapacity+")";
             
@@ -64,7 +67,7 @@ public class InsertData extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(InsertData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InsertDataServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -74,7 +77,7 @@ public class InsertData extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(InsertData.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(InsertDataServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

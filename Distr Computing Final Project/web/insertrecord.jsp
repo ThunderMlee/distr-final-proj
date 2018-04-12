@@ -9,10 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Insert record</title>
     </head>
     <body>
-        <form action="InsertData" method="post">
+        <form action="InsertDataServlet" method="post">
         <table>
               <tr>
                 <td>Location Name</td>
