@@ -27,6 +27,27 @@
         <url-pattern>/InsertDataServlet</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>printerservlet</servlet-name>
+        <servlet-class>servlet.PrinterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>printerservlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+  
+    <context-param>
+        <param-name>jdbcURL</param-name>
+        <param-value>jdbc:mysql://localhost:3306/printmarketing</param-value>
+    </context-param>
+    <context-param>
+        <param-name>jdbcUserName</param-name>
+        <param-value>root</param-value>
+    </context-param>
+    <context-param>
+        <param-name>jdbcPassword</param-name>
+        <param-value><param-value/>
+    </context-param>
     <session-config>
         <session-timeout>
             30
