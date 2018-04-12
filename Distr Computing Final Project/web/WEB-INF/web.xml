@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
+
         <servlet-name>DisplayRecordServlet</servlet-name>
         <servlet-class>Servlet.DisplayRecordServlet</servlet-class>
     </servlet>
@@ -28,11 +29,11 @@
     </servlet-mapping>
     
     <servlet>
-        <servlet-name>printerservlet</servlet-name>
-        <servlet-class>servlet.PrinterServlet</servlet-class>
+        <servlet-name>PrinterServlet</servlet-name>
+        <servlet-class>Servlet.PrinterServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>printerservlet</servlet-name>
+        <servlet-name>PrinterServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
   
@@ -46,8 +47,12 @@
     </context-param>
     <context-param>
         <param-name>jdbcPassword</param-name>
-        <param-value><param-value/>
+        <param-value></param-value>
     </context-param>
+    
+    <welcome-file-list>
+        <welcome-file>Login.jsp</welcome-file>
+    </welcome-file-list>
     <session-config>
         <session-timeout>
             30

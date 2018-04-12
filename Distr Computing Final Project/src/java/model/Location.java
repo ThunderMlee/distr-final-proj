@@ -53,4 +53,5 @@ public class Location {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
+    ////////////////////////////////////////////
 }
