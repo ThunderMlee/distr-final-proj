@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
+    <c:redirect url="Login.jsp"/>
+</c:if>
 <!DOCTYPE html>
 <html>
     <head>

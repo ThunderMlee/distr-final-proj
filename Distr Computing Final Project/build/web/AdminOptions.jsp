@@ -8,6 +8,10 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="model.Agent"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:if test="${sessionScope.ID == null && sessionScope.ROLE != 'ADMIN'}">
+    <c:redirect url="Login.jsp"></c:redirect>
+</c:if>
 <!DOCTYPE html>
 <html>
     <head>

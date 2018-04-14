@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:if test="${sessionScope.ID != 0 && sessionScope.ROLE != null}">
+    <c:redirect url="Login.jsp"/>
+</c:if>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,7 +25,7 @@
         UserName: <input type="text" name="Uname"/><br/>
         Password: <input type="password" name="pass"/><br/>
         Confirmation: <input type="password" name="conf"/><br/>
-        <input type="submit" value="Create"/>
+        <input type="submit" name="submit" value="Create"/>
         <br/>
         </form>
     </body>

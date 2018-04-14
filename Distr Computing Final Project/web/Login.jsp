@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<c:if test="${sessionScope.ID != null && sessionScope.ROLE != null}">
+    <c:redirect url="index.jsp"/>
+</c:if>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,7 +17,7 @@
         <title>Login page</title>
     </head>
     <body>
-        <form action="login" method="post" name="loginForm">
+        <form action="LoginServlet" method="post" name="loginForm">
 
             <p>Username:</p> <input type="text" name="name"/><br/>
             <p>Password:</p> <input type="password" name="pass"/><br/>
