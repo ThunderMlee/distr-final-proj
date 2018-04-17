@@ -69,7 +69,7 @@ public class PrinterServlet extends HttpServlet {
                 deleteAgent(request, response);
 
             default:
-                login(request, response);
+                response.sendRedirect("Login.jsp");
                 break;
 
         }
@@ -107,14 +107,6 @@ public class PrinterServlet extends HttpServlet {
         request.setAttribute("agentlist", agentList);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("AdminOptions.jsp");
-        dispatcher.forward(request, response);
-
-    }
-
-    private void login(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Login.jsp");
         dispatcher.forward(request, response);
 
     }

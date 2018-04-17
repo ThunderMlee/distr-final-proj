@@ -10,6 +10,10 @@
 <c:if test="${sessionScope.ID == null && sessionScope.ROLE =! 'ADMIN'}">
     <c:redirect url="Login.jsp"></c:redirect>
 </c:if>
+
+<c:if test="${orderList == null}">
+    <c:redirect url="${pageContext.request.contextPath}/OrderServlet" context="orderList"/>
+</c:if> 
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,19 +38,19 @@
             <th>Is payment received</th>
             </thead>
             <tbody>
-                <c:forEach var="order" items="${agentlist}">
+                <c:forEach var="order" items="${orderList}">
                     <tr>
-                        <td><c:out value="${agent.id}"/></td>
-                        <td><c:out value="${agent.firstName}"/></td>
-                        <td><c:out value="${agent.lastName}"/></td>
-                        <td><c:out value="${agent.phoneNo}"/></td>
-                        <td><c:out value="${agent.email}"/></td>
+                        <td><c:out value="${order.id}"/></td>
+                        <td><c:out value="${order.firstName}"/></td>
+                        <td><c:out value="${order.lastName}"/></td>
+                        <td><c:out value="${order.phoneNo}"/></td>
+                        <td><c:out value="${order.email}"/></td>
 
-                        <td><a href="edit?id=<c:out value='${agent.id}'/>">
+                        <td><a href="edit?id=<c:out value='${order.id}'/>">
                                 Edit
                             </a>
                             &nbsp;&nbsp;
-                            <a href="delete?id=<c:out value='${agent.id}'/>">
+                            <a href="delete?id=<c:out value='${order.id}'/>">
                                 Delete
                             </a>
                         </td>

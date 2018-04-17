@@ -17,7 +17,7 @@
         <title>Login page</title>
     </head>
     <body>
-        <form action="LoginServlet" method="post" name="loginForm">
+        <form action="${pageContext.request.contextPath}/LoginServlet" method="post" name="loginForm">
 
             <p>Username:</p> <input type="text" name="name"/><br/>
             <p>Password:</p> <input type="password" name="pass"/><br/>

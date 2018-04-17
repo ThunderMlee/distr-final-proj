@@ -51,7 +51,6 @@ public class LoginServlet extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");
 
-        RequestDispatcher dispatcher;
         HttpSession session = request.getSession();
         //session.setAttribute("sess", sess);
         //String sess = (String)session.getAttribute("sess"); 
@@ -62,20 +61,20 @@ public class LoginServlet extends HttpServlet {
         int[] res = checkCredentials(name, pass);
         switch (res[0]) {
             case 0:
-                dispatcher = request.getRequestDispatcher("Login.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("Login.jsp");
                 break;
             case 1:
                 session.setAttribute("ID", res[1]);
                 session.setAttribute("ROLE", "USER");
+                response.sendRedirect("index.jsp");
                 break;
             case 2:
                 session.setAttribute("ID", res[1]);
                 session.setAttribute("ROLE", "ADMIN");
+                response.sendRedirect("index.jsp");
                 break;
             default:
-                dispatcher = request.getRequestDispatcher("Login.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("Login.jsp");
                 break;
         }
     }
@@ -85,7 +84,7 @@ public class LoginServlet extends HttpServlet {
         
         ArrayList<Account> accountList = new ArrayList();
         accountList = accountService.viewAccount(accountDao);
-        int[] res = new int[1];
+        int[] res = new int[2];
         
         for(Account acc : accountList){
             if(name.equals(acc.getUserName()) && pass.equals(acc.getPassword()) && acc.getRole().equals("USER")){
