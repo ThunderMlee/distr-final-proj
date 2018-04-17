@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 /**
@@ -19,12 +14,11 @@ public class Agent {
     String uName;
     String pass;
 
-    public Agent(int id) {
-        this.ID = id;
+    public Agent() {
     }
     
-
-    public Agent() {
+    public Agent(int id) {
+        this.ID = id;
     }
 
     public Agent(String userName, String password) {
@@ -97,8 +91,4 @@ public class Agent {
     public void setPass(String pass) {
         this.pass = pass;
     }
-    
-    
-    
-    
 }
