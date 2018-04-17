@@ -48,7 +48,8 @@ public class AccountDao {
     
      public int addAccount(Account accountObj) {
         int res = 0;
-        String sql = "INSERT INTO login (userName , password , role, agentId) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO login (userName , password , role, agentId) "
+                + "VALUES (?, ?, ?, ?)";
         try(Connection conn = getConnection()) {
             
             if (conn != null) {
@@ -107,13 +108,15 @@ public class AccountDao {
     public Account showAccount(int ID) 
             throws SQLException {
         Account accountObj = null;
-        String sql = "SELECT * FROM login ";
-        sql += "WHERE id = ?";
+        String sql = "SELECT * FROM login "
+                + "WHERE id = ?";
         ResultSet result;
         
         try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
+            
             statement.setInt(1, ID);
             result = statement.executeQuery();
+            
             while (result.next()) {
                 accountObj = new Account();
                 accountObj.setID(result.getInt("id"));
@@ -132,8 +135,8 @@ public class AccountDao {
     public boolean updateAccount(Account accountObj) 
             throws SQLException {
 
-        String sql = "UPDATE login SET userName = ?, password = ?, role = ?, agentID = ?";
-        sql += "WHERE id = ?";
+        String sql = "UPDATE login SET userName = ?, password = ?, role = ?, agentID = ? "
+                + "WHERE id = ?";
         boolean res;
         
         try (Connection con = getConnection(); PreparedStatement statement = con.prepareStatement(sql)) {
@@ -151,7 +154,8 @@ public class AccountDao {
     public boolean deleteAccount(Account accountObj) 
             throws SQLException {
 
-        String sql = "DELETE FROM login where id = ?";
+        String sql = "DELETE FROM login "
+                + "WHERE id = ?";
         boolean res;
         
         try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {

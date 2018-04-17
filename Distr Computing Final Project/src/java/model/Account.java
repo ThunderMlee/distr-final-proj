@@ -2,7 +2,7 @@ package model;
 
 /**
  *
- * @author OWNER
+ * @author GhavinBahra
  */
 public class Account {
     

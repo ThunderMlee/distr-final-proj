@@ -1,7 +1,6 @@
 package Services;
 
 import dao.OrderDao;
-import java.awt.image.BufferedImage;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -32,6 +31,7 @@ public class OrderService {
             orderObj.setIsPaymentReceived(isPaymentReceived);
             res = dao.addOrder(orderObj);
         }
+        
         return res;
 
     }
@@ -39,21 +39,25 @@ public class OrderService {
     public ArrayList<Order> viewOrder(OrderDao dao) {
         ArrayList<Order> orderList = new ArrayList();
         orderList = dao.viewOrder();
+        
         return orderList;
     }
 
     public Order showOrder(int id, OrderDao dao) throws SQLException {
         Order orderObj = dao.showOrder(id);
+        
         return orderObj;
     }
 
     public boolean updateOrder(Order orderObj, OrderDao dao) throws SQLException {
         boolean res = dao.updateOrder(orderObj);
+        
         return res;
     }
 
     public boolean deleteOrder(Order orderObj, OrderDao dao) throws SQLException {
         boolean res = dao.deleteOrder(orderObj);
+        
         return res;
     }
 }

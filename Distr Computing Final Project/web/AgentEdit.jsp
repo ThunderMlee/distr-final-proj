@@ -1,5 +1,5 @@
 <%-- 
-    Document   : EditAgent
+    Document   : AgentEdit
     Created on : 11-Apr-2018, 8:32:36 PM
     Author     : RATHA
 --%>
@@ -8,16 +8,17 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
-    <c:redirect url="Login.jsp"/>
+    <c:redirect url="SiteLogin.jsp"/>
 </c:if>
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Edit marketing agent ${agent.firstName}</title>
+        <title>Edit agent ${agent.firstName}</title>
     </head>
     <body>
-        <form action="update" method="post" name="editForm">
+        <form action="update" method="POST" name="editAgentForm">
             <!-- the hidden input is use to get the id that you need to do the edit and delete function-->
             <input type="hidden" name="id" id="marketid" value="${market.id}"/>
             <table cellpadding="5" border="1">
@@ -52,7 +53,7 @@
 
 
                 <tr>
-                    <td colspan="2"><input type="submit" name="submit" value="Save"></td>
+                    <td colspan="2"><input type="submit" name="save" value="Save"></td>
                 </tr>
             </table>
         </form>

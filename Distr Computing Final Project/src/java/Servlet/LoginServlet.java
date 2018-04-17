@@ -2,9 +2,7 @@ package Servlet;
 
 import Services.AccountService;
 import dao.AccountDao;
-import dao.AgentDao;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -59,22 +57,23 @@ public class LoginServlet extends HttpServlet {
         String pass = request.getParameter("pass");
 
         int[] res = checkCredentials(name, pass);
+        
         switch (res[0]) {
             case 0:
-                response.sendRedirect("Login.jsp");
+                response.sendRedirect("SiteLogin.jsp");
                 break;
             case 1:
                 session.setAttribute("ID", res[1]);
                 session.setAttribute("ROLE", "USER");
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("SiteHome.jsp");
                 break;
             case 2:
                 session.setAttribute("ID", res[1]);
                 session.setAttribute("ROLE", "ADMIN");
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("SiteHome.jsp");
                 break;
             default:
-                response.sendRedirect("Login.jsp");
+                response.sendRedirect("SiteLogin.jsp");
                 break;
         }
     }

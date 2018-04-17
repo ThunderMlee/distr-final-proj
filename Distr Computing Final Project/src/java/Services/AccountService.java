@@ -7,7 +7,7 @@ import dao.AccountDao;
 
 /**
  *
- * @author OWNER
+ * @author GhavinBahra
  */
 public class AccountService {
     public int addAccount(String userName, String password, String role, int agentID, AccountDao dao) {

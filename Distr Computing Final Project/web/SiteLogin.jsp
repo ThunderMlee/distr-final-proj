@@ -1,5 +1,5 @@
 <%-- 
-    Document   : Login
+    Document   : SiteLogin
     Created on : 11-Apr-2018, 12:36:10 PM
     Author     : RATHA
 --%>
@@ -8,8 +8,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:if test="${sessionScope.ID != null && sessionScope.ROLE != null}">
-    <c:redirect url="index.jsp"/>
+    <c:redirect url="SiteHome.jsp"/>
 </c:if>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,10 +18,12 @@
         <title>Login page</title>
     </head>
     <body>
-        <form action="${pageContext.request.contextPath}/LoginServlet" method="post" name="loginForm">
+        <h1>Login</h1> <br />
+        
+        <form action="${pageContext.request.contextPath}/LoginServlet" method="POST" name="loginForm">
 
-            <p>Username:</p> <input type="text" name="name"/><br/>
-            <p>Password:</p> <input type="password" name="pass"/><br/>
+            <p>Username: </p> <input type="text" name="name"/><br/>
+            <p>Password: </p> <input type="password" name="pass"/><br/>
             <input type="submit" name="login" value="Login"/>
             <br/>
             <br/>

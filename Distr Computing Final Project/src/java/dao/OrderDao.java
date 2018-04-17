@@ -162,6 +162,7 @@ public class OrderDao {
 
             }
         }
+        
         result.close();
 
         return accountObj;
@@ -171,8 +172,8 @@ public class OrderDao {
             throws SQLException {
 
         String sql = "UPDATE orders SET agentId = ?, clientId = ?, flyerQty = ?, flyerLayout = ?, flyerImg = ?, personalCopy = ?, paymentInformation = ?, "
-                + "invoiceNumber = ?, comments = ?, isFlyerArtApproved = ?, isPaymentReceived = ? ";
-        sql += "WHERE id = ?";
+                + "invoiceNumber = ?, comments = ?, isFlyerArtApproved = ?, isPaymentReceived = ? "
+                + "WHERE id = ?";
         boolean res;
 
         try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -196,7 +197,8 @@ public class OrderDao {
     public boolean deleteOrder(Order orderObj)
             throws SQLException {
 
-        String sql = "DELETE FROM orders where id = ?";
+        String sql = "DELETE FROM orders WHERE "
+                + "id = ?";
         boolean res;
 
         try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {

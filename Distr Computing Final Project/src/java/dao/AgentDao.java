@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import java.sql.Connection;
@@ -12,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import model.Location;
 import model.Agent;
 
 /**
@@ -53,9 +47,10 @@ public class AgentDao {
 
     public int addAgent(Agent agentObj) {
         int res = 0;
-        String sql = "INSERT INTO marketingagent (firstName , lastName , phoneNo, email, userName, password) VALUES (?, ?, ?, ?, ?, ?)";
-        try {
-            Connection conn = getConnection();
+        String sql = "INSERT INTO marketingagent (firstName , lastName , phoneNo, email, userName, password) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+        try(Connection conn = getConnection();) {
+            
             if (conn != null) {
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 stmt.setString(1, agentObj.getfName());
@@ -65,12 +60,12 @@ public class AgentDao {
                 stmt.setString(5, agentObj.getuName());
                 stmt.setString(6, agentObj.getPass());
                 res = stmt.executeUpdate();
-                conn.close();
             }
 
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
+        
         return res;
     }
 
@@ -121,11 +116,11 @@ public class AgentDao {
         return agentList;
     }
 
-    public Agent showAgent(int id) 
+    public Agent showAgent(int id)
             throws SQLException {
         Agent agentObj = null;
-        String sql = "SELECT * FROM marketingagent ";
-        sql += "WHERE id = ?";
+        String sql = "SELECT * FROM marketingagent "
+                + "WHERE id = ?";
 
         Connection conn = getConnection();
         PreparedStatement statement = conn.prepareStatement(sql);
@@ -149,11 +144,11 @@ public class AgentDao {
         return agentObj;
     }
 
-    public boolean updateAgent(Agent agentObj) 
+    public boolean updateAgent(Agent agentObj)
             throws SQLException {
 
-        String sql = "UPDATE marketingagent SET firstName = ?, lastName = ?, phoneNo = ?, email = ?, userName = ?, password = ?";
-        sql += "WHERE id = ?";
+        String sql = "UPDATE marketingagent SET firstName = ?, lastName = ?, phoneNo = ?, email = ?, userName = ?, password = ? "
+                + "WHERE id = ?";
 
         Connection con = getConnection();
         PreparedStatement statement = con.prepareStatement(sql);
@@ -172,20 +167,20 @@ public class AgentDao {
         return res;
     }
 
-    public boolean deleteAgent(Agent agentObj) 
+    public boolean deleteAgent(Agent agentObj)
             throws SQLException {
 
-        String sql = "DELETE FROM marketingagent where id = ?";
+        boolean res;
+        String sql = "DELETE FROM marketingagent "
+                + "WHERE id = ?";
 
-        Connection conn = getConnection();
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, agentObj.getID());
+        try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
+            
+            statement.setInt(1, agentObj.getID());
+            res = statement.executeUpdate() > 0;
+        }
 
-        boolean res = statement.executeUpdate() > 0;
-        statement.close();
-        conn.close();
         return res;
-
     }
 
 }
