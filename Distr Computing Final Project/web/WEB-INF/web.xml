@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    
     <!--SERVLETS-->
     <servlet>
         <servlet-name>DisplayRecordServlet</servlet-name>
         <servlet-class>Servlet.DisplayRecordServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClientServlet</servlet-name>
+        <servlet-class>Servlet.ClientServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DisplayRecordServlet</servlet-name>
         <url-pattern>/DisplayRecordServlet</url-pattern>
     </servlet-mapping>
-     
     <servlet>
         <servlet-name>EditRecordServlet</servlet-name>
         <servlet-class>Servlet.EditRecordServlet</servlet-class>
@@ -19,7 +21,6 @@
         <servlet-name>EditRecordServlet</servlet-name>
         <url-pattern>/EditRecordServlet</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>InsertDataServlet</servlet-name>
         <servlet-class>Servlet.InsertDataServlet</servlet-class>
@@ -28,7 +29,6 @@
         <servlet-name>InsertDataServlet</servlet-name>
         <url-pattern>/InsertDataServlet</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>PrinterServlet</servlet-name>
         <servlet-class>Servlet.PrinterServlet</servlet-class>
@@ -37,7 +37,6 @@
         <servlet-name>PrinterServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-     
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>Servlet.LoginServlet</servlet-class>
@@ -46,7 +45,6 @@
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>OrderServlet</servlet-name>
         <servlet-class>Servlet.OrderServlet</servlet-class>
@@ -56,7 +54,6 @@
         <url-pattern>/OrderServlet</url-pattern>
     </servlet-mapping>
     <!--END OF SERVLETS-->
-    
     <!--CONTEXT PARAMETERS-->
     <context-param>
         <param-name>jdbcURL</param-name>
@@ -71,12 +68,13 @@
         <param-value/>
     </context-param>
     <!--END OF CONTEXT PARAMETERS-->
-    
-    
     <welcome-file-list>
         <welcome-file>SiteLogin.jsp</welcome-file>
     </welcome-file-list>
-    
+    <servlet-mapping>
+        <servlet-name>ClientServlet</servlet-name>
+        <url-pattern>/ClientServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             60

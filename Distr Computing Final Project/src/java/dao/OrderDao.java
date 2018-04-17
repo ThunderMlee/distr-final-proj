@@ -137,8 +137,8 @@ public class OrderDao {
     public Order showOrder(int ID)
             throws SQLException {
         Order accountObj = null;
-        String sql = "SELECT * FROM orders ";
-        sql += "WHERE id = ?";
+        String sql = "SELECT * FROM orders "
+                + "WHERE id = ?";
         ResultSet result;
 
         try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
