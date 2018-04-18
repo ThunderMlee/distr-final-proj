@@ -10,7 +10,7 @@ public class Client {
     private int agentId;
     private String firstName;
     private String lastName;
-    private int streetNumber;
+    private String streetNumber;
     private String streetName;
     private String city;
     private String province;
@@ -28,7 +28,7 @@ public class Client {
         this.id = id;
     }
     
-    public Client(int id, int agentId, String firstName, String lastName, int streetNumber, String streetName, String city, String province, String postalCode, String telOffice, 
+    public Client(int id, int agentId, String firstName, String lastName, String streetNumber, String streetName, String city, String province, String postalCode, String telOffice, 
             String telCell, String email, String company, String companyType) {
         this.id = id;
         this.agentId = agentId;
@@ -78,11 +78,11 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public int getStreetNumber() {
+    public String getStreetNumber() {
         return streetNumber;
     }
 
-    public void setStreetNumber(int streetNumber) {
+    public void setStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
     }
 
