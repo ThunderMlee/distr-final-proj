@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 /**
@@ -11,12 +6,12 @@ package model;
  */
 public class Location {
     
-    int Id;
+    int ID;
     String name;
     int capacity;
 
     public Location(int Id, String name, int capacity) {
-        this.Id = Id;
+        this.ID = Id;
         this.name = name;
         this.capacity = capacity;
     }
@@ -29,17 +24,13 @@ public class Location {
         this.capacity = capacity;
     }
     
-    
-    
-    
-    
-
-    public int getId() {
-        return Id;
+    //Getters & setters//////////////////////////
+    public int getID() {
+        return ID;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getName() {
@@ -57,6 +48,5 @@ public class Location {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-    
-    
+    ////////////////////////////////////////////
 }
