@@ -14,15 +14,15 @@ public class AgentService {
 
     public int addAgent(String fName, String lName, String phoneNo, String email, String uName, String pass, AgentDao dao) {
         int res = 0;
-        Agent markObj = new Agent();
+        Agent agentObj = new Agent();
         if (fName != null && lName != null && phoneNo != null && email != null && uName != null && pass != null) {
-            markObj.setfName(fName);
-            markObj.setlName(lName);
-            markObj.setPhoneNo(phoneNo);
-            markObj.setEmail(email);
-            markObj.setuName(uName);
-            markObj.setPass(pass);
-            res = dao.addAgent(markObj);
+            agentObj.setfName(fName);
+            agentObj.setlName(lName);
+            agentObj.setPhoneNo(phoneNo);
+            agentObj.setEmail(email);
+            agentObj.setuName(uName);
+            agentObj.setPass(pass);
+            res = dao.addAgent(agentObj);
         }
         return res;
 
@@ -44,8 +44,8 @@ public class AgentService {
         return res;
     }
 
-    public boolean deleteAgent(Agent markObj, AgentDao dao) throws SQLException {
-        boolean res = dao.deleteAgent(markObj);
+    public boolean deleteAgent(Agent agentObj, AgentDao dao) throws SQLException {
+        boolean res = dao.deleteAgent(agentObj);
         return res;
     }
 }
