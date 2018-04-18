@@ -10,8 +10,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit marketing agent ${agent.firstName}</title>
+        <style>
+            #title{
+                text-align: center;
+            }
+            
+            form{
+                margin: auto;
+                width: 31%;
+            }
+        </style>
     </head>
     <body>
+        <h1 id="title">Edit Agent</h1>
         <form action="update" method="post" name="editForm">
             <!-- the hidden input is use to get the id that you need to do the edit and delete function-->
             <input type="hidden" name="id" id="marketid" value="${market.id}"/>

@@ -10,18 +10,54 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login page</title>
-    </head>
-    <body>
-        <form action="login" method="post" name="loginForm">
+        <style>
+            #title{
+                text-align: center;
+            }
+            
+            p{
+                font-weight: bold;
+            }
+            
+            form {
+                margin: auto;
+                width: 400px;
+                border: 3px solid #f1f1f1;
+            }
 
-            <p>Username:</p> <input type="text" name="name"/><br/>
-            <p>Password:</p> <input type="password" name="pass"/><br/>
-            <input type="submit" name="login" value="Login"/>
-            <br/>
-            <br/>
-            <a href="new">Create an Account</a>
-            &nbsp;&nbsp;
-            <a href="forget">Forgot your password?</a>
-        </form>
-    </body>
-</html>
+            input[type=text], input[type=password] {
+                width: 100%;
+                padding: 12px 20px;
+                margin-bottom: 8px;
+                display: inline-block;
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
+            
+            input[type=submit]{
+                border: none;
+                background-color: lightgreen;
+                width: 100%;
+                height: 30px;
+            }
+            
+            #forgot{
+                float: right;
+            }
+            </style>
+        </head>
+        <body>
+            <h1 id="title">Login</h1>
+            <form action="login" method="post" name="loginForm">
+
+                <p>Username:</p> <input type="text" name="name"/><br/>
+                <p>Password:</p> <input type="password" name="pass"/><br/>
+                <input type="submit" name="login" value="Login"/>
+                <br/>
+                <br/>
+                <a href="new">Create an Account</a>
+                &nbsp;&nbsp;
+                <a href="forget" id="forgot">Forgot your password?</a>
+            </form>
+        </body>
+    </html>
