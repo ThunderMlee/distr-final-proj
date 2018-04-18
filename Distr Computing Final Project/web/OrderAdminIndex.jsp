@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
+<%--<c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
@@ -17,7 +17,7 @@
 
 <c:if test="${orderList == null}">
     <c:redirect url="${pageContext.request.contextPath}/OrderServlet" context="orderList"/>
-</c:if> 
+</c:if> --%>
 
 <!DOCTYPE html>
 <html>

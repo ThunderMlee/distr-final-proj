@@ -7,15 +7,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
+<%--<c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
     <c:redirect url="SiteLogin.jsp"/>
-</c:if>
+</c:if>--%>
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Create Marketing Agent</title>
+        <link href="css/TestCSS.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <form action="insert" method="POST" name="addAgentForm">
