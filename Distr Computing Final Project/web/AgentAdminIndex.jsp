@@ -25,8 +25,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Agent main</title>
+        <link href="CSS/GlobalTables.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
     <center>
@@ -39,7 +41,7 @@
         <!-- the hidden input is use to get the id that you need to do the edit and delete function-->
         <input type="hidden" name="id" id="id" value="${agent.id}"/>
         <h1>List of marketing agents</h1>
-        <table cellpadding="5" border="1">
+        <table cellpadding="5" border="0">
             <thead>
             <th>ID</th>
             <th>First Name</th>

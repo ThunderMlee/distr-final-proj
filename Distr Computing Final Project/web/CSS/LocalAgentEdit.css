@@ -1,0 +1,11 @@
+#title{
+                text-align: center;
+            }
+            
+            table{
+                margin: auto;
+            }
+            
+            input[type=submit]{
+                float: right;
+            }

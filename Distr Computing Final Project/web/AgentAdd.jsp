@@ -14,19 +14,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Create Marketing Agent</title>
-        <link href="css/TestCSS.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/LocalAgentAdd.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <h1 id="title">Add Agent</h1>
         <form action="insert" method="POST" name="addAgentForm">
-            <label>First Name: </label><input type="text" name="Fname"/> <br/>
-            <label>Second Name: </label><input type="text" name="Lname"/> <br/>
-            <label>Phone Number: </label><input type="text" name="phone"/> <br/>
-            <label>Email: </label><input type="email" name="email"/> <br/>
-            <label>Username: </label><input type="text" name="Uname"/> <br/>
-            <label>Password: </label><input type="password" name="pass"/> <br/>
-            <label>Confirmation: </label><input type="password" name="conf"/> <br/>
+            <label class="text">First Name: </label><input class="textbox" type="text" name="Fname"/> <br/>
+            <label class="text">Second Name: </label><input class="textbox" type="text" name="Lname"/> <br/>
+            <label class="text">Phone Number: </label><input class="textbox" type="text" name="phone"/> <br/>
+            <label class="text">Email: </label><input class="textbox" type="email" name="email"/> <br/>
+            <label class="text">Username: </label><input class="textbox" type="text" name="Uname"/> <br/>
+            <label class="text">Password: </label><input class="textbox" type="password" name="pass"/> <br/>
+            <label class="text">Confirmation: </label><input class="textbox" type="password" name="conf"/> <br/>
             <input type="submit" name="submit" value="Create"/> <br/>
         </form>
     </body>

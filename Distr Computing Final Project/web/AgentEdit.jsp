@@ -14,21 +14,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Edit agent ${agent.firstName}</title>
-        <style>
-            #title{
-                text-align: center;
-            }
-            
-            table{
-                margin: auto;
-            }
-            
-            input[type=submit]{
-                float: right;
-            }
-        </style>
+        <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/LocalAgentEdit.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <form action="update" method="POST" name="editAgentForm">

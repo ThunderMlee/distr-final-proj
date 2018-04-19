@@ -14,45 +14,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Login page</title>
-        <style>
-            #title{
-                text-align: center;
-            }
-
-            p{
-                font-weight: bold;
-            }
-
-            form {
-                margin: auto;
-                width: 400px;
-                padding-left: 10px;
-                padding-right: 10px;
-                border: 3px solid #f1f1f1;
-            }
-
-            input[type=text], input[type=password] {
-                width: 100%;
-                padding: 12px 20px;
-                display: inline-block;
-                border: 1px solid #ccc;
-                box-sizing: border-box;
-            }
-
-            input[type=submit]{
-                margin-top: 10px;
-                border: none;
-                background-color: lightgreen;
-                width: 100%;
-                height: 30px;
-            }
-
-            #forgot{
-                float: right;
-            }
-        </style>
+        <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/LocalLogin.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
 

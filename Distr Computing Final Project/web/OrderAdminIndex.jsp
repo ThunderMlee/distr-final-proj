@@ -22,7 +22,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalTables.css" rel="stylesheet" type="text/css"/>
         <title>Orders Index</title>
     </head>
     <body>
