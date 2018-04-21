@@ -6,6 +6,7 @@ package model;
  */
 public class Client {
    
+    //Client information 
     private int id;
     private int agentId;
     private String firstName;
@@ -21,6 +22,7 @@ public class Client {
     private String company;
     private String companyType;
 
+    //Constructors
     public Client() {
     }
 
@@ -46,6 +48,7 @@ public class Client {
         this.companyType = companyType;
     }
 
+    // Getters and Setters
     public int getId() {
         return id;
     }

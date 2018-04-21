@@ -11,6 +11,7 @@ import model.Client;
  */
 public class ClientService {
 
+    //Add client
     public int addClient(int agentID, String firstName, String lastName, String streetNumber, String streetName,
             String city, String province, String postalCode, String telOffice, String telCell, String email, String company,
             String companyType, ClientDao dao) {
@@ -36,11 +37,10 @@ public class ClientService {
             clientObj.setCompanyType(companyType);
             res = dao.addClient(clientObj);
         }
-
         return res;
-
     }
 
+    //Show all clients
     public ArrayList<Client> viewClient(ClientDao dao) {
         ArrayList<Client> clientList = new ArrayList();
         clientList = dao.viewClient();
@@ -48,21 +48,10 @@ public class ClientService {
         return clientList;
     }
 
+    //Show specific client
     public Client showClient(int id, ClientDao dao) throws SQLException {
         Client clientObj = dao.showClient(id);
 
         return clientObj;
     }
-
-//    public boolean updateClient(Client clientObj, ClientDao dao) throws SQLException {
-//        boolean res = dao.updateClient(clientObj);
-//        
-//        return res;
-//    }
-//
-//    public boolean deleteClient(Client clientObj, ClientDao dao) throws SQLException {
-//        boolean res = dao.deleteClient(clientObj);
-//        
-//        return res;
-//    }
 }

@@ -15,10 +15,12 @@ import model.Client;
  */
 public class ClientDao {
 
+    //Connection strings
     private String url;
     private String userDB;
     private String passDB;
 
+    //Constructors
     public ClientDao(String url, String userDB, String passDB) {
         this.url = url;
         this.userDB = userDB;
@@ -28,6 +30,7 @@ public class ClientDao {
     public ClientDao() {
     }
 
+    //Connection method
     protected Connection getConnection() {
 
         Connection conn = null;
@@ -46,6 +49,7 @@ public class ClientDao {
         return conn;
     }
 
+    //Add client
     public int addClient(Client clientObj) {
         int res = 0;
         String sql = "INSERT INTO clients (agentId, firstName,lastName,streetNumber,streetName,"
@@ -78,6 +82,7 @@ public class ClientDao {
         return res;
     }
 
+    //Select all clients
     public ArrayList<Client> viewClient() {
         ArrayList<Client> clientList = new ArrayList();
         String sql = "SELECT * FROM clients";
@@ -142,6 +147,7 @@ public class ClientDao {
         return clientList;
     }
 
+    //Select specific client from id
     public Client showClient(int ID)
             throws SQLException {
         Client clientObj = null;
@@ -176,45 +182,4 @@ public class ClientDao {
 
         return clientObj;
     }
-//
-//    public boolean updateClient(Client clientObj)
-//            throws SQLException {
-//
-//        String sql = "UPDATE clients SET agentId = ?, clientId = ?, flyerQty = ?, flyerLayout = ?, flyerImg = ?, personalCopy = ?, paymentInformation = ?, "
-//                + "invoiceNumber = ?, comments = ?, isFlyerArtApproved = ?, isPaymentReceived = ? "
-//                + "WHERE id = ?";
-//        boolean res;
-//
-//        try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
-//            statement.setInt(1, clientObj.getAgentID());
-//            statement.setInt(2, clientObj.getClientID());
-//            statement.setInt(3, clientObj.getFlyerQty());
-//            statement.setString(4, clientObj.getFlyerLayout());
-//            statement.setBlob(5, clientObj.getFlyerImg());
-//            statement.setInt(6, clientObj.getPersonalCopy());
-//            statement.setString(7, clientObj.getPaymentInfo());
-//            statement.setInt(8, clientObj.getInvoiceNum());
-//            statement.setString(9, clientObj.getComments());
-//            statement.setBoolean(10, clientObj.getIsFlyerArtApproved());
-//            statement.setBoolean(11, clientObj.getIsPaymentReceived());
-//            res = statement.executeUpdate() > 0;
-//        }
-//
-//        return res;
-//    }
-//
-//    public boolean deleteClient(Client clientObj)
-//            throws SQLException {
-//
-//        String sql = "DELETE FROM clients "
-//                + "WHERE id = ?";
-//        boolean res;
-//
-//        try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
-//            statement.setInt(1, clientObj.getId());
-//            res = statement.executeUpdate() > 0;
-//        }
-//
-//        return res;
-//    }
 }

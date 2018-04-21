@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<!--Navigation Options-->
 <c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
@@ -18,6 +19,7 @@
         <title>Create New Client</title>
     </head>
     <body>
+        <!--Table for creating new client-->
         <form action="insert" method="POST" name="addClientForm">
             <table>
                 <tr>

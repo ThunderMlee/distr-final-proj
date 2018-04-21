@@ -3,13 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/web/AgentAdminIndex.jsp</file>
+            <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/src/java/Servlet/InsertDataServlet.java</file>
             <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/web/SiteLogin.jsp</file>
-            <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/web/LocationEdit.jsp</file>
+            <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/src/java/dao/AccountDao.java</file>
             <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/web/ClientAdminIndex.jsp</file>
             <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/web/ClientAdd.jsp</file>
-            <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/src/java/Services/ClientService.java</file>
-            <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/web/SiteHome.jsp</file>
+            <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/src/java/Services/AccountService.java</file>
             <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/src/java/Servlet/LoginServlet.java</file>
         </group>
     </open-files>

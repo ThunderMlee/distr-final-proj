@@ -9,7 +9,7 @@
 <%@page import="model.Client"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
+<!--Navigation Options-->
 <c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
@@ -36,6 +36,7 @@
     <center>
         <!-- the hidden input is use to get the id that you need to do the edit and delete function-->
         <input type="hidden" name="id" id="id" value="${client.id}"/>
+        <!--Table of clients-->
         <h1>List of marketing clients</h1>
         <table cellpadding="5" border="1">
             <thead>
