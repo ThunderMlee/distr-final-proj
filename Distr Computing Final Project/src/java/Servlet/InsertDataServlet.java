@@ -45,7 +45,7 @@ public class InsertDataServlet extends HttpServlet {
                     + "values('"+locationName+"',"+distributionCapacity+")";
             
             conn = dbconn.setConnection();
-            stmt = conn.createStatement();   
+            stmt = conn.createStatement();
             
             stmt.executeUpdate(query);
             
@@ -58,6 +58,7 @@ public class InsertDataServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
             rd.forward(request, response);
             conn.close();
+            
         }
     }
 
