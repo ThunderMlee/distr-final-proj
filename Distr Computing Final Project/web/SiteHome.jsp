@@ -24,6 +24,7 @@
             <button name="home" value="Home" onclick="<c:redirect url='SiteHome.jsp'></c:redirect>"></button> <br/>
             <button name="location" value="Location Main" onclick="<c:redirect url='LocationMain.jsp'></c:redirect>"></button> <br />
             <button name="agentAdmin" value="Agent Index(ADMIN)" onclick="<c:redirect url='AgentAdminIndex.jsp'/>"></button> <br />
+            <button name="clientAdmin" value="Client Index(ADMIN)" onclick="<c:redirect url='ClientAdminIndex.jsp'/>"></button> <br />
             <button name="orderAdmin" value="Order Index(ADMIN)" onclick="<c:redirect url='OrderAdminIndex.jsp'/>"></button> <br />
             <button name="error" value="Error page" onclick="<c:redirect url='Error.jsp'/>"></button>
         </div>

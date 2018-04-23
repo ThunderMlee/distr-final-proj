@@ -22,19 +22,20 @@ public class ClientServlet extends HttpServlet {
     ClientService clientService;
     ClientDao clientDao;
 
+    //Connection strings
     String jdbcUserName;
     String jdbcPassword;
     String jdbcURL;
 
+    //Get connection strings and objects
     @Override
     public void init() throws ServletException {
         jdbcURL = getServletContext().getInitParameter("jdbcURL");
         jdbcUserName = getServletContext().getInitParameter("jdbcUserName");
         jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
 
-        ClientDao = new ClientDao(jdbcURL, jdbcUserName, jdbcPassword);
+        clientDao = new ClientDao(jdbcURL, jdbcUserName, jdbcPassword);
         clientService = new ClientService();
-
     }
     
     /**
@@ -46,49 +47,45 @@ public class ClientServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    //Redirect request to appropriate method
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         String action = request.getParameter("");
         
         switch(action){
-            case "":
-                
+            case "/clientList":
+                viewListClient(request, response, "ClientAdminIndex.jsp");
                 break;
-            case "1":
-                
-                break;
-            case "2":
-                
-                break;
-            case "3":
-                
+            case "insert":
+                insertClient(request, response);
                 break;
             default:
-                
+                response.sendRedirect("SiteHome.jsp");
                 break;
         }
-        
-    }   
- 
+    }
 
+    //Insert new client
     private void insertClient(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
 
-        int agentID = Integer.parseInt(request.getParameter("agentID"));
-        int clientID = Integer.parseInt(request.getParameter("clientID"));
-        int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
-        String flyerLayout = request.getParameter("flyerLayout");
-        Blob flyerImg = null;
-        int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
-        String paymentInfo = request.getParameter("paymentInfo");
-        int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
-        String comments = request.getParameter("comments");
-        boolean isFlyerArtApproved = Boolean.parseBoolean(request.getParameter("isFlyerArtApproved"));
-        boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("isPaymentReceived"));
+        int agentId = Integer.parseInt(request.getParameter("agentId"));
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String streetNumber = request.getParameter("streetNumber");
+        String streetName = request.getParameter("streetName");
+        String city = request.getParameter("city");
+        String province = request.getParameter("province");
+        String postalCode = request.getParameter("postalCode");
+        String telOffice = request.getParameter("telOffice");
+        String telCell = request.getParameter("telCell");
+        String email = request.getParameter("email");
+        String company = request.getParameter("company");
+        String companyType = request.getParameter("companyType");
 
-        int res = clientService.addOrder(agentID, clientID, flyerQty, flyerLayout, flyerImg, personalCopy, paymentInfo,
-            invoiceNum, comments, isFlyerArtApproved, isPaymentReceived, clientDao);
+        int res = clientService.addClient(agentId, firstName,lastName,streetNumber,streetName,
+                city,province,postalCode,telOffice,telCell,email,company,companyType, clientDao);
 
         if (res > 0) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("list");
@@ -99,87 +96,18 @@ public class ClientServlet extends HttpServlet {
 
     }
     
+    //View all clients
     private void viewListClient(HttpServletRequest request, HttpServletResponse response, String page)
             throws ServletException, IOException, NullPointerException {
         
         ArrayList<Client> clientList = new ArrayList();
         clientList = clientService.viewClient(clientDao);
 
-        request.setAttribute("orderList", clientList);
+        request.setAttribute("clientList", clientList);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);
         dispatcher.forward(request, response);
     }
-
-    private void editClient(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int ID = Integer.parseInt(request.getParameter("id"));
-
-        try {
-            Client order = clientService.showClient(ID, clientDao);
-            request.setAttribute("order", order);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("OrderEdit.jsp");
-            dispatcher.forward(request, response);
-
-        } catch (SQLException ex) {
-            request.setAttribute("Error", ex);
-            RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
-            rd.forward(request, response);
-        }
-
-    }
-
-    private void updateClient(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-
-        int ID = Integer.parseInt(request.getParameter("ID"));
-        int agentID = Integer.parseInt(request.getParameter("agentID"));
-        int clientID = Integer.parseInt(request.getParameter("clientID"));
-        int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
-        String flyerLayout = request.getParameter("flyerLayout");
-        Blob flyerImg = null;
-        int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
-        String paymentInfo = request.getParameter("paymentInfo");
-        int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
-        String comments = request.getParameter("comments");
-        boolean isFlyerArtApproved = Boolean.parseBoolean(request.getParameter("isFlyerArtApproved"));
-        boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("isPaymentReceived"));
-
-        Client clientObj = new Client(ID, agentID, clientID, flyerQty, flyerLayout, flyerImg, personalCopy, paymentInfo, invoiceNum, comments, isFlyerArtApproved, isPaymentReceived);
-        
-        try {
-            clientService.updateClient(clientObj, clientDao);
-        } catch (SQLException ex) {
-            request.setAttribute("Error", ex);
-            RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
-            rd.forward(request, response);
-        }
-        
-        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderAdminIndex.jsp");
-        dispatcher.forward(request, response);
-    }
-
-    private void deleteClient(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-
-        int ID = Integer.parseInt(request.getParameter("id"));
-        Client clientObj = new Client(ID);
-
-        try {
-            clientService.deleteClient(clientObj, clientDao);
-        } catch (SQLException ex) {
-            request.setAttribute("Error", ex);
-            RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
-            rd.forward(request, response);
-        }
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderAdminIndex.jsp");
-        dispatcher.forward(request, response);
-    }
-    
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
