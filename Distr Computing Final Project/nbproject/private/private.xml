@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+
             <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/src/java/Servlet/InsertDataServlet.java</file>
             <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/web/SiteLogin.jsp</file>
             <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/src/java/dao/AccountDao.java</file>
@@ -10,6 +11,14 @@
             <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/web/ClientAdd.jsp</file>
             <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/src/java/Services/AccountService.java</file>
             <file>file:/C:/Users/shans/Desktop/Finalproject/Distr%20Computing%20Final%20Project/src/java/Servlet/LoginServlet.java</file>
+            <file>file:/C:/Users/OWNER/Desktop/Homework/Semester%204/Distr%20Computing%20using%20Java/Final%20Project/Distr%20Computing%20Final%20Project/src/java/Servlet/LoginServlet.java</file>
+            <file>file:/C:/Users/OWNER/Desktop/Homework/Semester%204/Distr%20Computing%20using%20Java/Final%20Project/Distr%20Computing%20Final%20Project/src/java/Services/AccountService.java</file>
+            <file>file:/C:/Users/OWNER/Desktop/Homework/Semester%204/Distr%20Computing%20using%20Java/Final%20Project/Distr%20Computing%20Final%20Project/web/OrderAdminIndex.jsp</file>
+            <file>file:/C:/Users/OWNER/Desktop/Homework/Semester%204/Distr%20Computing%20using%20Java/Final%20Project/Distr%20Computing%20Final%20Project/src/java/Services/OrderService.java</file>
+            <file>file:/C:/Users/OWNER/Desktop/Homework/Semester%204/Distr%20Computing%20using%20Java/Final%20Project/Distr%20Computing%20Final%20Project/web/LocationAdd.jsp</file>
+            <file>file:/C:/Users/OWNER/Desktop/Homework/Semester%204/Distr%20Computing%20using%20Java/Final%20Project/Distr%20Computing%20Final%20Project/web/OrderAdd.jsp</file>
+            <file>file:/C:/Users/OWNER/Desktop/Homework/Semester%204/Distr%20Computing%20using%20Java/Final%20Project/Distr%20Computing%20Final%20Project/src/java/Servlet/OrderServlet.java</file>
+
         </group>
     </open-files>
 </project-private>
