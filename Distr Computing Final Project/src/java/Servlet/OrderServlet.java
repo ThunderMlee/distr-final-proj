@@ -83,7 +83,7 @@ public class OrderServlet extends HttpServlet {
         int clientID = Integer.parseInt(request.getParameter("clientID"));
         int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
         String flyerLayout = request.getParameter("flyerLayout");
-        Blob flyerImg = null;
+        Blob flyerImg = request.getParameter("flyerImg");
         int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
         String paymentInfo = request.getParameter("paymentInfo");
         int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
