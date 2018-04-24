@@ -23,17 +23,17 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LocationServlet extends HttpServlet {
 
-    String locationName,id;
+    String locationName, id;
     int distributionCapacity;
     List lst = new ArrayList();
-    
+
     String query;
-    
+
     Connection conn;
     Statement stmt;
     ResultSet res;
     DatabaseConnection dbconn;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,8 +48,8 @@ public class LocationServlet extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("location");
-        
-        switch(action){
+
+        switch (action) {
             case "add":
                 addLocation(request, response);
                 break;
@@ -66,11 +66,11 @@ public class LocationServlet extends HttpServlet {
                 response.sendRedirect("SiteHome.jsp");
                 break;
         }
-        
+
     }
-    
-    protected void viewListLocation(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException, SQLException{
+
+    protected void viewListLocation(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try {
             dbconn = new DatabaseConnection();
@@ -90,7 +90,7 @@ public class LocationServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
             rd.forward(request, response);
         } finally {
-            request.setAttribute("EmpData", lst);
+            request.setAttribute("LocData", lst);
             RequestDispatcher rd = request.getRequestDispatcher("LocationIndex.jsp");
             rd.forward(request, response);
 
@@ -99,7 +99,7 @@ public class LocationServlet extends HttpServlet {
 
         }
     }
-    
+
     protected void addLocation(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
@@ -127,9 +127,9 @@ public class LocationServlet extends HttpServlet {
             rd.forward(request, response);
         }
     }
-    
-    protected void editLocation(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, SQLException, IOException{
+
+    protected void editLocation(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, SQLException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         try {
@@ -152,51 +152,51 @@ public class LocationServlet extends HttpServlet {
         }
     }
 
-    protected void updateLocation(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException, SQLException{
-    
+    protected void updateLocation(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+
         response.setContentType("text/html;charset=UTF-8");
-        
-        try  {
+
+        try {
             dbconn = new DatabaseConnection();
             id = request.getParameter("id");
             locationName = request.getParameter("locationName");
             distributionCapacity = Integer.parseInt(request.getParameter("distributionCapacity"));
-           
+
             conn = dbconn.setConnection();
             stmt = conn.createStatement();
-            
-            //query = "update location set locationName = '"+locationName+"',distributionCapacity = '"+distributionCapacity+"' where id = "+id+"'";
-            //query = "UPDATE location SET locationName = "
-              //      + "(locationName, distributionCapacity)"
-                //    + "values('"+locationName+"',"+distributionCapacity+")"
-                  //  + "WHERE id = " + id;
-            query = "UPDATE location set locationName='"+locationName+"',distributionCapacity='"+distributionCapacity+"' WHERE id=" + id;
-            
+
+            /*query = "update location set locationName = '"+locationName+"',distributionCapacity = '"+distributionCapacity+"' where id = "+id+"'";
+            query = "UPDATE location SET locationName = "
+                  + "(locationName, distributionCapacity)"
+                + "values('"+locationName+"',"+distributionCapacity+")"
+              + "WHERE id = " + id;*/
+            query = "UPDATE location set locationName='" + locationName + "',distributionCapacity='" + distributionCapacity + "' WHERE id=" + id;
+
             stmt.executeUpdate(query);
-            
-        }catch(NumberFormatException | SQLException ex){
+
+        } catch (NumberFormatException | SQLException ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request,response);
+            rd.forward(request, response);
             out.close();
         }
     }
-    
-    protected void deleteLocation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+    protected void deleteLocation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
             dbconn = new DatabaseConnection();
             conn = dbconn.setConnection();
             stmt = conn.createStatement();
             id = request.getParameter("id");
-            query = "DELETE from location where id = '" + id + "'";
+            query = "DELETE from location WHERE id = '" + id + "'";
             stmt.executeUpdate(query);
-            
-        }catch(SQLException ex){
+
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally{
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher("LocationIndex.jsp");
             rd.forward(request, response);
             out.close();

@@ -1,0 +1,16 @@
+/* 
+    Created on : Apr 24, 2018, 5:16:17 PM
+    Author     : Thomas
+*/
+
+#title{
+    text-align: center;
+}
+
+table{
+    margin: auto;
+}
+
+input[type=submit]{
+    float: right;
+}
