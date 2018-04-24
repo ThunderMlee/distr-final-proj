@@ -2,6 +2,7 @@ package Servlet;
 
 import Services.OrderService;
 import dao.OrderDao;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -19,7 +20,6 @@ import model.Order;
  */
 public class OrderServlet extends HttpServlet {
 
-    
     OrderService orderService;
     OrderDao orderDao;
 
@@ -35,7 +35,6 @@ public class OrderServlet extends HttpServlet {
 
         orderDao = new OrderDao(jdbcURL, jdbcUserName, jdbcPassword);
         orderService = new OrderService();
-
     }
     
     /**
@@ -55,7 +54,7 @@ public class OrderServlet extends HttpServlet {
         
         switch(action){
             case "/orderList":
-                viewListOrder(request, response, "OrderAdminIndex.jsp");
+                viewListOrder(request, response);
                 break;
             case "edit":
                 editOrder(request, response);
@@ -79,11 +78,13 @@ public class OrderServlet extends HttpServlet {
     private void insertOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
 
+        FileInputStream in = new FileInputStream(request.getParameter("flyerImg"));
+        
         int agentID = Integer.parseInt(request.getParameter("agentID"));
         int clientID = Integer.parseInt(request.getParameter("clientID"));
         int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
         String flyerLayout = request.getParameter("flyerLayout");
-        Blob flyerImg = request.getParameter("flyerImg");
+        Blob flyerImg = (Blob) in.getChannel();
         int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
         String paymentInfo = request.getParameter("paymentInfo");
         int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
@@ -103,7 +104,7 @@ public class OrderServlet extends HttpServlet {
 
     }
     
-    private void viewListOrder(HttpServletRequest request, HttpServletResponse response, String page)
+    private void viewListOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
         
         ArrayList<Order> orderList = new ArrayList();
@@ -111,7 +112,7 @@ public class OrderServlet extends HttpServlet {
 
         request.setAttribute("orderList", orderList);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderIndex.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -137,12 +138,14 @@ public class OrderServlet extends HttpServlet {
     private void updateOrder(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
+        FileInputStream in = new FileInputStream(request.getParameter("flyerImg"));
+        
         int ID = Integer.parseInt(request.getParameter("ID"));
         int agentID = Integer.parseInt(request.getParameter("agentID"));
         int clientID = Integer.parseInt(request.getParameter("clientID"));
         int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
         String flyerLayout = request.getParameter("flyerLayout");
-        Blob flyerImg = null;
+        Blob flyerImg = (Blob) in.getChannel();
         int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
         String paymentInfo = request.getParameter("paymentInfo");
         int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
@@ -160,7 +163,7 @@ public class OrderServlet extends HttpServlet {
             rd.forward(request, response);
         }
         
-        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderAdminIndex.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderIndex.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -178,7 +181,7 @@ public class OrderServlet extends HttpServlet {
             rd.forward(request, response);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderAdminIndex.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderIndex.jsp");
         dispatcher.forward(request, response);
     }
     

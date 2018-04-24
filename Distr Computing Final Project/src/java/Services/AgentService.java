@@ -1,7 +1,6 @@
 package Services;
 
 import dao.AgentDao;
-import model.Location;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Agent;
@@ -25,7 +24,6 @@ public class AgentService {
             res = dao.addAgent(agentObj);
         }
         return res;
-
     }
 
     public ArrayList<Agent> viewAgent(AgentDao dao) {

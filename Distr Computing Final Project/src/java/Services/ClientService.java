@@ -12,13 +12,15 @@ import model.Client;
 public class ClientService {
 
     //Add client
-    public int addClient(int agentID, String firstName, String lastName, String streetNumber, String streetName,
+    public int addClient(int agentID, String firstName, String lastName, int streetNumber, String streetName,
             String city, String province, String postalCode, String telOffice, String telCell, String email, String company,
             String companyType, ClientDao dao) {
+        
         int res = 0;
         Client clientObj = new Client();
+        
         if (agentID != 0 && firstName != null
-                && lastName != null && streetNumber != null && streetName != null
+                && lastName != null && streetNumber != 0 && streetName != null
                 && city != null && province != null && postalCode != null
                 && telOffice != null && telCell != null && email != null
                 && company != null && companyType != null) {
@@ -41,7 +43,7 @@ public class ClientService {
     }
 
     //Show all clients
-    public ArrayList<Client> viewClient(ClientDao dao) {
+    public ArrayList<Client> viewClient(ClientDao dao) throws SQLException{
         ArrayList<Client> clientList = new ArrayList();
         clientList = dao.viewClient();
 
@@ -53,5 +55,17 @@ public class ClientService {
         Client clientObj = dao.showClient(id);
 
         return clientObj;
+    }
+    
+    //updates an agent
+    public boolean updateAgent(Client clientObj, ClientDao dao) throws SQLException {
+        boolean res = dao.updateClient(clientObj);
+        return res;
+    }
+
+    //deletes an agent
+    public boolean deleteAgent(Client clientObj, ClientDao dao) throws SQLException {
+        boolean res = dao.deleteClient(clientObj);
+        return res;
     }
 }

@@ -62,7 +62,7 @@ public class ClientDao {
                 stmt.setInt(1, clientObj.getAgentId());
                 stmt.setString(2, clientObj.getFirstName());
                 stmt.setString(3, clientObj.getLastName());
-                stmt.setString(4, clientObj.getStreetNumber());
+                stmt.setInt(4, clientObj.getStreetNumber());
                 stmt.setString(5, clientObj.getStreetName());
                 stmt.setString(6, clientObj.getCity());
                 stmt.setString(7, clientObj.getProvince());
@@ -91,7 +91,7 @@ public class ClientDao {
         int agentId = 0;
         String firstName = "";
         String lastName = "";
-        String streetNumber = "";
+        int streetNumber = 0;
         String streetName = "";
         String city = "";
         String province = "";
@@ -110,7 +110,7 @@ public class ClientDao {
                 agentId = resultSet.getInt("agentId");
                 firstName = resultSet.getString("firstName");
                 lastName = resultSet.getString("lastName");
-                streetNumber = resultSet.getString("streetNumber");
+                streetNumber = resultSet.getInt("streetNumber");
                 streetName = resultSet.getString("streetName");
                 city = resultSet.getString("city");
                 province = resultSet.getString("province");
@@ -165,7 +165,7 @@ public class ClientDao {
                 clientObj.setAgentId(result.getInt("agentId"));
                 clientObj.setFirstName(result.getString("firstName"));
                 clientObj.setLastName(result.getString("lastName"));
-                clientObj.setStreetNumber(result.getString("streetNumber"));
+                clientObj.setStreetNumber(result.getInt("streetNumber"));
                 clientObj.setStreetName(result.getString("streetName"));
                 clientObj.setCity(result.getString("city"));
                 clientObj.setProvince(result.getString("province"));
@@ -181,5 +181,49 @@ public class ClientDao {
         result.close();
 
         return clientObj;
+    }
+    
+    
+    public boolean updateClient(Client clientObj) 
+            throws SQLException {
+
+        String sql = "UPDATE clients SET agentId = ?, firstName = ?, lastName = ?, streetNumber = ?, streetName = ?, city = ?, province = ?, postalCode = ?, "
+                + "telOffice = ?, telCell = ?, email = ? "
+                + "WHERE id = ?";
+        boolean res;
+        
+        try (Connection con = getConnection(); PreparedStatement statement = con.prepareStatement(sql)) {
+            statement.setInt(1, clientObj.getAgentId());
+            statement.setString(2, clientObj.getFirstName());
+            statement.setString(3, clientObj.getLastName());
+            statement.setInt(4, clientObj.getStreetNumber());
+            statement.setString(5, clientObj.getStreetName());
+            statement.setString(1, clientObj.getCity());
+            statement.setString(2, clientObj.getProvince());
+            statement.setString(3, clientObj.getPostalCode());
+            statement.setString(4, clientObj.getTelOffice());
+            statement.setString(5, clientObj.getTelCell());
+            statement.setString(5, clientObj.getEmail());
+            statement.setInt(5, clientObj.getId());
+            
+            res = statement.executeUpdate() > 0;
+        }
+        
+        return res;
+    }
+
+    public boolean deleteClient(Client clientObj) 
+            throws SQLException {
+
+        String sql = "DELETE FROM clients "
+                + "WHERE id = ?";
+        boolean res;
+        
+        try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setInt(1, clientObj.getId());
+            res = statement.executeUpdate() > 0;
+        }
+        
+        return res;
     }
 }

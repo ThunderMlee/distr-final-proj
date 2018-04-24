@@ -1,28 +1,29 @@
 <%-- 
-    Document   : OrderAdminIndex
+    Document   : OrderIndex
     Created on : Apr 14, 2018, 2:13:56 PM
-    Author     : Ghavin Bahra
+    Author     : GhavinBahra
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Order"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
-<c:if test="${sessionScope.ID == null && sessionScope.ROLE =! 'ADMIN'}">
-    <c:redirect url="SiteHome.jsp"/>
-</c:if>
-
 <c:if test="${orderList == null}">
-    <c:redirect url="${pageContext.request.contextPath}/OrderServlet" context="orderList"/>
+    <jsp:forward page="${pageContext.request.contextPath}/OrderServlet/orderList"/>
+    <%--<c:redirect url="/OrderServlet/orderList">
+        <c:param name="orderList" value="orderList"/>
+    </c:redirect>--%>
 </c:if> 
 
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Orders Index</title>
     </head>
     <body>
@@ -41,6 +42,9 @@
             <th>Comments</th>
             <th>Is flyer art approved</th>
             <th>Is payment received</th>
+            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+            <th>Action</th>
+            </c:if>
             </thead>
             <tbody>
                 <c:forEach var="order" items="${orderList}">
@@ -50,7 +54,7 @@
                         <td><c:out value="${order.lastName}"/></td>
                         <td><c:out value="${order.phoneNo}"/></td>
                         <td><c:out value="${order.email}"/></td>
-
+                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
                         <td><a href="edit?id=<c:out value='${order.id}'/>">
                                 Edit
                             </a>
@@ -59,6 +63,7 @@
                                 Delete
                             </a>
                         </td>
+                        </c:if>
                     </tr>
                 </c:forEach>
 
