@@ -14,7 +14,9 @@
 </c:if>
 
 <c:if test="${agentList == null}">
-    <c:redirect url="${pageContext.request.contextPath}/AgentServlet" context="/agentList"/>
+    <c:redirect url="/AgentServlet">
+        <c:param name="agent" value="list"/>
+    </c:redirect>
 </c:if> 
 
 <!DOCTYPE html>
@@ -32,11 +34,13 @@
     <br/>
     <center>
         <!-- the hidden input is use to get the id that you need to do the edit and delete function-->
-        <input type="hidden" name="id" id="id" value="${agent.id}"/>
+        <input type="hidden" name="id" id="id" value="${agent.ID}"/>
         <h1>List of marketing agents</h1>
         <table cellpadding="5" border="1">
             <thead>
+                <c:if test="${sessionScope.ROLE == 'ADMIN'}">
                 <th>ID</th>
+                </c:if>
                 <th>First Name</th>
                 <th>Last Number</th>
                 <th>Phone No.</th>
@@ -48,17 +52,19 @@
             <tbody>
                 <c:forEach var="agent" items="${agentList}">
                     <tr>
-                        <td><c:out value="${agent.id}"/></td>
-                        <td><c:out value="${agent.firstName}"/></td>
-                        <td><c:out value="${agent.lastName}"/></td>
+                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                        <td><c:out value="${agent.ID}"/></td>
+                        </c:if>
+                        <td><c:out value="${agent.fName}"/></td>
+                        <td><c:out value="${agent.lName}"/></td>
                         <td><c:out value="${agent.phoneNo}"/></td>
                         <td><c:out value="${agent.email}"/></td>
                         <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                        <td><a href="edit?id=<c:out value='${agent.id}'/>">
+                        <td><a href="edit?id=<c:out value='${agent.ID}'/>">
                                 Edit
                             </a>
                             &nbsp;&nbsp;
-                            <a href="delete?id=<c:out value='${agent.id}'/>">
+                            <a href="delete?id=<c:out value='${agent.ID}'/>">
                                 Delete
                             </a>
                         </td>

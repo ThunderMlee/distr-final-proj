@@ -58,32 +58,23 @@ public class LoginServlet extends HttpServlet {
         String pass = request.getParameter("pass");
 
         int[] res = checkCredentials(name, pass);
-        RequestDispatcher dispatch;
         
         switch (res[0]) {
             case 0:
-                dispatch = request.getRequestDispatcher("/SiteLogin.jsp");
-                dispatch.forward(request, response);
-                //response.sendRedirect("SiteLogin.jsp");
+                response.sendRedirect("SiteLogin.jsp");
                 break;
             case 1:
                 session.setAttribute("ID", res[1]);
                 session.setAttribute("ROLE", "USER");
-                dispatch = request.getRequestDispatcher("/SiteHome.jsp");
-                dispatch.forward(request, response);
-                //response.sendRedirect("SiteHome.jsp");
+                response.sendRedirect("SiteHome.jsp");
                 break;
             case 2:
                 session.setAttribute("ID", res[1]);
                 session.setAttribute("ROLE", "ADMIN");
-                dispatch = request.getRequestDispatcher("/SiteHome.jsp");
-                dispatch.forward(request, response);
-                //response.sendRedirect("SiteHome.jsp");
+                response.sendRedirect("SiteHome.jsp");
                 break;
             default:
-                dispatch = request.getRequestDispatcher("/SiteLogin.jsp");
-                dispatch.forward(request, response);
-                //response.sendRedirect("SiteLogin.jsp");
+                response.sendRedirect("SiteLogin.jsp");
                 break;
         }
     }

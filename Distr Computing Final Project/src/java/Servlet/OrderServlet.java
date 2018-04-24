@@ -50,10 +50,10 @@ public class OrderServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String action = request.getServletPath();
+        String action = request.getParameter("order");
         
         switch(action){
-            case "/orderList":
+            case "list":
                 viewListOrder(request, response);
                 break;
             case "edit":
