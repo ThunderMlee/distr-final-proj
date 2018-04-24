@@ -7,11 +7,11 @@ package model;
 public class Client {
    
     //Client information 
-    private int id;
+    private int Id;
     private int agentId;
     private String firstName;
     private String lastName;
-    private String streetNumber;
+    private int streetNumber;
     private String streetName;
     private String city;
     private String province;
@@ -27,12 +27,12 @@ public class Client {
     }
 
     public Client(int id){
-        this.id = id;
+        this.Id = id;
     }
     
-    public Client(int id, int agentId, String firstName, String lastName, String streetNumber, String streetName, String city, String province, String postalCode, String telOffice, 
+    public Client(int Id, int agentId, String firstName, String lastName, int streetNumber, String streetName, String city, String province, String postalCode, String telOffice, 
             String telCell, String email, String company, String companyType) {
-        this.id = id;
+        this.Id = Id;
         this.agentId = agentId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -50,11 +50,11 @@ public class Client {
 
     // Getters and Setters
     public int getId() {
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.Id = id;
     }
 
     public int getAgentId() {
@@ -81,11 +81,11 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public String getStreetNumber() {
+    public int getStreetNumber() {
         return streetNumber;
     }
 
-    public void setStreetNumber(String streetNumber) {
+    public void setStreetNumber(int streetNumber) {
         this.streetNumber = streetNumber;
     }
 

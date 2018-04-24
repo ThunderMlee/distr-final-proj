@@ -49,6 +49,7 @@ public class LoginServlet extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");
 
+        
         HttpSession session = request.getSession();
         //session.setAttribute("sess", sess);
         //String sess = (String)session.getAttribute("sess"); 
@@ -57,23 +58,32 @@ public class LoginServlet extends HttpServlet {
         String pass = request.getParameter("pass");
 
         int[] res = checkCredentials(name, pass);
+        RequestDispatcher dispatch;
         
         switch (res[0]) {
             case 0:
-                response.sendRedirect("SiteLogin.jsp");
+                dispatch = request.getRequestDispatcher("/SiteLogin.jsp");
+                dispatch.forward(request, response);
+                //response.sendRedirect("SiteLogin.jsp");
                 break;
             case 1:
                 session.setAttribute("ID", res[1]);
                 session.setAttribute("ROLE", "USER");
-                response.sendRedirect("SiteHome.jsp");
+                dispatch = request.getRequestDispatcher("/SiteHome.jsp");
+                dispatch.forward(request, response);
+                //response.sendRedirect("SiteHome.jsp");
                 break;
             case 2:
                 session.setAttribute("ID", res[1]);
                 session.setAttribute("ROLE", "ADMIN");
-                response.sendRedirect("SiteHome.jsp");
+                dispatch = request.getRequestDispatcher("/SiteHome.jsp");
+                dispatch.forward(request, response);
+                //response.sendRedirect("SiteHome.jsp");
                 break;
             default:
-                response.sendRedirect("SiteLogin.jsp");
+                dispatch = request.getRequestDispatcher("/SiteLogin.jsp");
+                dispatch.forward(request, response);
+                //response.sendRedirect("SiteLogin.jsp");
                 break;
         }
     }

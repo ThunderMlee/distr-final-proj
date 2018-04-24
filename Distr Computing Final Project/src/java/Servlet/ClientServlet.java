@@ -3,7 +3,6 @@ package Servlet;
 import Services.ClientService;
 import dao.ClientDao;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -54,11 +53,17 @@ public class ClientServlet extends HttpServlet {
         String action = request.getParameter("");
         
         switch(action){
-            case "/clientList":
-                viewListClient(request, response, "ClientAdminIndex.jsp");
+            case "clientList":
+                viewListClient(request, response);
                 break;
             case "insert":
                 insertClient(request, response);
+                break;
+            case "update":
+                updateClient(request,response);
+                break;
+            case "delete":
+                deleteClient(request, response);
                 break;
             default:
                 response.sendRedirect("SiteHome.jsp");
@@ -73,7 +78,7 @@ public class ClientServlet extends HttpServlet {
         int agentId = Integer.parseInt(request.getParameter("agentId"));
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
-        String streetNumber = request.getParameter("streetNumber");
+        int streetNumber = Integer.parseInt(request.getParameter("streetNumber"));
         String streetName = request.getParameter("streetName");
         String city = request.getParameter("city");
         String province = request.getParameter("province");
@@ -97,16 +102,91 @@ public class ClientServlet extends HttpServlet {
     }
     
     //View all clients
-    private void viewListClient(HttpServletRequest request, HttpServletResponse response, String page)
+    private void viewListClient(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
         
-        ArrayList<Client> clientList = new ArrayList();
-        clientList = clientService.viewClient(clientDao);
+        try{
+            ArrayList<Client> clientList = new ArrayList();
+            clientList = clientService.viewClient(clientDao);
 
-        request.setAttribute("clientList", clientList);
+            request.setAttribute("clientList", clientList);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-        dispatcher.forward(request, response);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("ClientIndex.jsp");
+            dispatcher.forward(request, response);
+        }catch(SQLException ex){
+            request.setAttribute("Error", ex);
+            RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
+            rd.forward(request, response);
+        }
+        
+    }
+    
+    private void editClient(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int ID = Integer.parseInt(request.getParameter("id"));
+
+        try {
+            Client client = clientService.showClient(ID, clientDao);
+            request.setAttribute("client", client);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("ClientEdit.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (SQLException ex) {
+            request.setAttribute("Error", ex);
+            RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
+            rd.forward(request, response);
+        }
+
+    }
+
+    private void updateClient(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+
+        int Id = Integer.parseInt(request.getParameter("Id"));
+        int agentId = Integer.parseInt(request.getParameter("agentId"));
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        int streetNumber = Integer.parseInt(request.getParameter("streetNumber"));
+        String streetName = request.getParameter("streetName");
+        String city = request.getParameter("city");
+        String province = request.getParameter("province");
+        String postalCode = request.getParameter("postalCode");
+        String telOffice = request.getParameter("telOffice");
+        String telCell = request.getParameter("telCell");
+        String email = request.getParameter("email");
+        String company = request.getParameter("company");
+        String companyType = request.getParameter("companyType");
+
+        Client clientObj = new Client(Id ,agentId, firstName,lastName,streetNumber,streetName,
+                city,province,postalCode,telOffice,telCell,email,company,companyType);
+        
+        try {
+            clientService.updateAgent(clientObj, clientDao);
+        } catch (SQLException ex) {
+            request.setAttribute("Error", ex);
+            RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
+            rd.forward(request, response);
+        }
+        
+        response.sendRedirect("ClientIndex.jsp");
+    }
+
+    private void deleteClient(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+
+        int ID = Integer.parseInt(request.getParameter("id"));
+        Client clientObj = new Client(ID);
+
+        try {
+            clientService.deleteAgent(clientObj, clientDao);
+        } catch (SQLException ex) {
+            request.setAttribute("Error", ex);
+            RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
+            rd.forward(request, response);
+        }
+
+        response.sendRedirect("ClientIndex.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

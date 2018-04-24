@@ -22,15 +22,15 @@
         <table>
               <tr>
                 <td>Location Name</td>
-                <td><input type="text" name="locationName"></td>
+                <td><input type="text" name="locationName"/></td>
             </tr>
               <tr>
                 <td>Distribution Capacity</td>
-                <td><input type="text" name="distributionCapacity"></td>
+                <td><input type="text" name="distributionCapacity"/></td>
             </tr>
               <tr>
                 <td></td>
-                <td><input type="submit" value="Submit"></td>
+                <td><input type="submit" value="Submit"/></td>
             </tr>
         </table>
         </form>

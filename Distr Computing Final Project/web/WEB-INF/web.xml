@@ -10,6 +10,10 @@
         <servlet-class>Servlet.ClientServlet</servlet-class>
     </servlet>
     <servlet-mapping>
+        <servlet-name>ClientServlet</servlet-name>
+        <url-pattern>/ClientServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>DisplayRecordServlet</servlet-name>
         <url-pattern>/DisplayRecordServlet</url-pattern>
     </servlet-mapping>
@@ -30,12 +34,12 @@
         <url-pattern>/InsertDataServlet</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>PrinterServlet</servlet-name>
-        <servlet-class>Servlet.PrinterServlet</servlet-class>
+        <servlet-name>AgentServlet</servlet-name>
+        <servlet-class>Servlet.AgentServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>PrinterServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <servlet-name>AgentServlet</servlet-name>
+        <url-pattern>/AgentServlet</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -71,10 +75,7 @@
     <welcome-file-list>
         <welcome-file>SiteLogin.jsp</welcome-file>
     </welcome-file-list>
-    <servlet-mapping>
-        <servlet-name>ClientServlet</servlet-name>
-        <url-pattern>/ClientServlet</url-pattern>
-    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             60

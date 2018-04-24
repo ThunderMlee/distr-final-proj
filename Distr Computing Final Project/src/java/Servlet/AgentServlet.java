@@ -17,7 +17,7 @@ import model.Agent;
  *
  * @author RATHA
  */
-public class PrinterServlet extends HttpServlet {
+public class AgentServlet extends HttpServlet {
 
     AgentService agentService;
     AgentDao agentDao;
@@ -80,23 +80,6 @@ public class PrinterServlet extends HttpServlet {
                 response.sendRedirect("SiteLogin.jsp");
                 break;
         }
-    }
-
-    private void adminLog(HttpServletRequest request, HttpServletResponse response) //MAKE SURE TO DELETE THIS METHOD
-            throws IOException, ServletException {
-        String uName = request.getParameter("name");
-        String uPass = request.getParameter("pass");
-        PrintWriter out = response.getWriter();
-        out.println("The result is: " + uName + "\n\n" + uPass);
-
-        ArrayList<Agent> agentList = new ArrayList();
-        agentList = agentService.viewAgent(agentDao);
-
-        request.setAttribute("agentList", agentList);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("AgentAdminIndex.jsp");
-        dispatcher.forward(request, response);
-
     }
 
     private void viewListAgent(HttpServletRequest request, HttpServletResponse response, String page)

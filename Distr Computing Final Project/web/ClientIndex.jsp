@@ -1,5 +1,5 @@
 <%-- 
-    Document   : ClientAdminIndex
+    Document   : ClientIndex
     Created on : 11-Apr-2018, 1:00:39 PM
     Author     : Shanshan
 --%>
@@ -9,23 +9,18 @@
 <%@page import="model.Client"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!--Navigation Options-->
 <c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
-<c:if test="${sessionScope.ID == null && sessionScope.ROLE != 'USER'}">
-    <c:redirect url="SiteHome.jsp"/>
-</c:if>
-
 <c:if test="${clientList == null}">
-    <c:redirect url="${pageContext.request.contextPath}/PrinterServlet" context="clientList"/>
+    <c:redirect url="${pageContext.request.contextPath}/ClientServlet" context="/clientList"/>
 </c:if> 
 
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Client main</title>
     </head>
     <body>
@@ -54,6 +49,9 @@
             <th>Email</th>
             <th>Company</th>
             <th>Company Type</th>
+            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+            <th>Action</th>
+            </c:if>
             </thead>
             <tbody>
                 <c:forEach var="client" items="${clientList}">
@@ -71,6 +69,16 @@
                         <td><c:out value="${client.email}"/></td>
                         <td><c:out value="${client.company}"/></td>
                         <td><c:out value="${client.companyType}"/></td>
+                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                        <td><a href="edit?id=<c:out value='${client.id}'/>">
+                                Edit
+                            </a>
+                            &nbsp;&nbsp;
+                            <a href="delete?id=<c:out value='${client.id}'/>">
+                                Delete
+                            </a>
+                        </td>
+                        </c:if>
                     </tr>
                 </c:forEach>
             </tbody>
