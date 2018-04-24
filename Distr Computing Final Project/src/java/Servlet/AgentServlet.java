@@ -3,7 +3,6 @@ package Servlet;
 import Services.AgentService;
 import dao.AgentDao;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -50,39 +49,36 @@ public class AgentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
      
-        String action = request.getServletPath();
+        String action = request.getParameter("agent");
 
         switch (action) {
-            case "/add"://adds new agent
-                newAgent(request, response);
+            case "add"://adds new agent
+                addAgent(request, response);
                 break;
 
-            case "/agentList": //sends list of agents from db to AgentAdminIndex.jsp
-                viewListAgent(request, response, "AgentAdminIndex.jsp");
+            case "list": //sends list of agents from db to AgentIndex.jsp
+                viewListAgent(request, response);
                 break;
-
-            case "/insert": // create new agent in the database
-                insertAgent(request, response);
-                break;
-
-            case "/edit":
+                
+            case "edit":
                 editAgent(request, response);
                 break;
 
-            case "/update":
+            case "update":
                 updateAgent(request, response);
                 break;
 
-            case "/delete":
+            case "delete":
                 deleteAgent(request, response);
-
+                break;
+                
             default:
-                response.sendRedirect("SiteLogin.jsp");
+                response.sendRedirect("SiteHome.jsp");
                 break;
         }
     }
 
-    private void viewListAgent(HttpServletRequest request, HttpServletResponse response, String page)
+    private void viewListAgent(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
         
         ArrayList<Agent> agentList = new ArrayList();
@@ -90,16 +86,11 @@ public class AgentServlet extends HttpServlet {
 
         request.setAttribute("agentList", agentList);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("AgentIndex.jsp");
         dispatcher.forward(request, response);
     }
-    
-    private void newAgent(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.sendRedirect("AgentAdd.jsp");
-    }
 
-    private void insertAgent(HttpServletRequest request, HttpServletResponse response)
+    private void addAgent(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
 
         String fName = request.getParameter("Fname");
@@ -118,7 +109,7 @@ public class AgentServlet extends HttpServlet {
         int res = agentService.addAgent(fName, lName, phoneNo, email, uName, pass, agentDao);
 
         if (res > 0) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("AgentAdminIndex.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("AgentIndex.jsp");
             dispatcher.forward(request, response);
         } else {
             response.sendRedirect("SiteError.jsp");
@@ -166,7 +157,7 @@ public class AgentServlet extends HttpServlet {
             rd.forward(request, response);
         }
         
-        response.sendRedirect("AgentAdminIndex.jsp");
+        response.sendRedirect("AgentIndex.jsp");
     }
 
     private void deleteAgent(HttpServletRequest request, HttpServletResponse response)
@@ -183,7 +174,7 @@ public class AgentServlet extends HttpServlet {
             rd.forward(request, response);
         }
 
-        response.sendRedirect("AgentAdminIndex.jsp");
+        response.sendRedirect("AgentIndex.jsp");
     }
 
     

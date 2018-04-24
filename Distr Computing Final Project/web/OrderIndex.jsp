@@ -14,10 +14,9 @@
 </c:if>
 
 <c:if test="${orderList == null}">
-    <jsp:forward page="${pageContext.request.contextPath}/OrderServlet/orderList"/>
-    <%--<c:redirect url="/OrderServlet/orderList">
-        <c:param name="orderList" value="orderList"/>
-    </c:redirect>--%>
+    <c:redirect url="/OrderServlet">
+        <c:param name="order" value="list"/>
+    </c:redirect>
 </c:if> 
 
 <!DOCTYPE html>
@@ -28,11 +27,16 @@
     </head>
     <body>
         <h1>List of Orders</h1>
+        <center>
+            <a href="OrderAdd.jsp">Add new order</a>
+        </center>
         <table cellpadding="5" border="1">
             <thead>
+            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
             <th>ID</th>
             <th>Agent ID</th>
             <th>Client ID</th>
+            </c:if>
             <th>Flyer Quantity</th>
             <th>Flyer Layout</th>
             <th>Flyer Image</th>
@@ -49,17 +53,26 @@
             <tbody>
                 <c:forEach var="order" items="${orderList}">
                     <tr>
-                        <td><c:out value="${order.id}"/></td>
-                        <td><c:out value="${order.firstName}"/></td>
-                        <td><c:out value="${order.lastName}"/></td>
-                        <td><c:out value="${order.phoneNo}"/></td>
-                        <td><c:out value="${order.email}"/></td>
                         <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                        <td><a href="edit?id=<c:out value='${order.id}'/>">
+                        <td><c:out value="${order.ID}"/></td>
+                        <td><c:out value="${order.agentID}"/></td>
+                        <td><c:out value="${order.clientID}"/></td>
+                        </c:if>
+                        <td><c:out value="${order.flyerQty}"/></td>
+                        <td><c:out value="${order.flyerLayout}"/></td>
+                        <td><c:out value="${order.flyerImg}"/></td>
+                        <td><c:out value="${order.personalCopy}"/></td>
+                        <td><c:out value="${order.paymentInfo}"/></td>
+                        <td><c:out value="${order.invoiceNum}"/></td>
+                        <td><c:out value="${order.comments}"/></td>
+                        <td><c:out value="${order.isFlyerArtApproved}"/></td>
+                        <td><c:out value="${order.isPaymentReceived}"/></td>
+                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                        <td><a href="edit?id=<c:out value='${order.ID}'/>">
                                 Edit
                             </a>
                             &nbsp;&nbsp;
-                            <a href="delete?id=<c:out value='${order.id}'/>">
+                            <a href="delete?id=<c:out value='${order.ID}'/>">
                                 Delete
                             </a>
                         </td>

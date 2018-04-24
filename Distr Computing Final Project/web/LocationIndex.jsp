@@ -9,7 +9,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
+<c:if test="${sessionScope.ID == null || sessionScope.ROLE == null}">
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
@@ -21,31 +21,42 @@
     </head>
     <body>
         <script type="text/javascript">
-
-            function editLocation(id) {
-                url = "LocationEdit";
-                window.location.href = "http://localhost:/AdminPage/" + url + "?id=" + id;
-
-
+            function editRecord(id) {
+                url = "EditRecordServlet";
+                window.location.href = "http://localhost:8080/Distr_Computing_Final_Project/" + url + "?id=" + id;
+            }
+            function deleteRecord(id) {
+                url = "DeleteRecordServlet2";
+                window.location.href = "http://localhost:8080/Distr_Computing_Final_Project/" + url + "?id=" + id;
             }
         </script>
-
-        <table align="center" border="1px" width="80%">
+        <table cellpadding="5" border="1">
+            <thead>
+            <th>ID</th>
+            <th>Location Name</th>
+            <th>Distribution Capacity</th>
+        </thead>
+        <tbody>
             <%Iterator itr;%>
-            <%List data = (List) request.getAttribute("EmpData");
-                for (itr = data.iterator(); itr.hasNext();) {
-            %>
+            <%List data = (List) request.getAttribute("LocData");
+                for (itr = data.iterator(); itr.hasNext();) {%>
             <tr>
-                <% String s = (String) itr.next();%>
-                <td><%=s%></td>
-                <td><%= itr.next()%></td>
-                <td><%= itr.next()%></td>
-                <td><%= itr.next()%></td>
-                <td><input type ="submit" value="Edit" name="edit" onclick="editLocation(<%=s%>);" /></td>
-                <td><input type ="submit" value="Delete" name="delete" onclick="LocationDelete(<%=s%>);"/></td>
 
+                <% String s = (String) itr.next();%>
+
+                <td><%=s%></td>
+
+                <td><%= itr.next()%></td>
+                <td><%= itr.next()%></td>
+
+                <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                <td><input type=submit value="Edit" name="edit" onclick="editRecord(<%=s%>);"/></td>
+                <td><input type=submit value="Delete" name="delete" onclick="deleteRecord(<%=s%>);"/></td>
+                </c:if>
+                <%}%>
             </tr>
-            <%}%>
-        </table>
-    </body>
+
+        </tbody>
+    </table>
+</body>
 </html>

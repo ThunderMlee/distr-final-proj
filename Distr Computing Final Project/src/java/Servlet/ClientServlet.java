@@ -50,14 +50,14 @@ public class ClientServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        String action = request.getParameter("");
+        String action = request.getParameter("client");
         
         switch(action){
-            case "clientList":
-                viewListClient(request, response);
+            case "Add":
+                addClient(request, response);
                 break;
-            case "insert":
-                insertClient(request, response);
+            case "list":
+                viewListClient(request, response);
                 break;
             case "update":
                 updateClient(request,response);
@@ -72,7 +72,7 @@ public class ClientServlet extends HttpServlet {
     }
 
     //Insert new client
-    private void insertClient(HttpServletRequest request, HttpServletResponse response)
+    private void addClient(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
 
         int agentId = Integer.parseInt(request.getParameter("agentId"));

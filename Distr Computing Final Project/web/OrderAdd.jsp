@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:if test="${sessionScope.ID == null && sessionScope.ROLE == null}">
+<c:if test="${sessionScope.ID == null || sessionScope.ROLE == null}">
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
@@ -15,10 +15,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Add an order</title>
+        <title>New order</title>
     </head>
     <body>
         <form action="OrderServlet" enctype="multipart/form-data" method="POST" name="orderAddForm">
+            <input type="hidden" name="order" value="add"/>
             <table>
                 <tr>
                     <td>Agent</td>
@@ -34,7 +35,11 @@
                 </tr>
                 <tr>
                     <td>Flyer Layout</td>
-                    <td><input type="text" name="flyerLayout"></td>
+                    <td>
+                        <label>Landscape</label><input type="radio" value="landscape" name="flyerLayout"/><br/>
+                        <label>Portrait</label><input type="radio" value="portrait" name="flyerLayout"/><br/>
+                        <label>Both</label><input type="radio" value="both" name="flyerLayout"/><br/>
+                    </td>
                 </tr>
                 <tr>
                     <td>Flyer Image</td>
@@ -54,11 +59,21 @@
                 </tr>
                 <tr>
                     <td>Is flyer art approved?</td>
-                    <td><input type="radio" name="artApprove"/><input type="radio" name="artApprove"/></td>
+                    <td>
+                        <br/>
+                        <label>Yes</label><input type="radio" value="yes" name="artApprove"/> <br/>
+                        <label>No</label><input type="radio" value="no" name="artApprove"/> <br/>
+                        <br/>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Is payment received?</td>
-                    <td><input type="radio" name="payReceive"/><input type="radio" name="payReceive"/></td>
+                    <td>Has payment received?</td>
+                    <td>
+                        <br/>
+                        <label>Yes</label><input type="radio" value="yes" name="payReceive"/> <br/>
+                        <label>No</label><input type="radio" value="no" name="payReceive"/> <br/>
+                        <br/>
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
@@ -66,17 +81,5 @@
                 </tr>
             </table>
         </form>
-        <!--<th>ID</th>
-            <th>Agent ID</th>
-            <th>Client ID</th>
-            <th>Flyer Quantity</th>
-            <th>Flyer Layout</th>
-            <th>Flyer Image</th>
-            <th>Personal Copy</th>
-            <th>Payment Information</th>
-            <th>Invoice Number</th>
-            <th>Comments</th>
-            <th>Is flyer art approved</th>
-            <th>Is payment received</th>-->
     </body>
 </html>

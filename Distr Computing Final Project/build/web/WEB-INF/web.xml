@@ -9,6 +9,10 @@
         <servlet-name>ClientServlet</servlet-name>
         <servlet-class>Servlet.ClientServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LocationServlet</servlet-name>
+        <servlet-class>Servlet.LocationServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ClientServlet</servlet-name>
         <url-pattern>/ClientServlet</url-pattern>
@@ -75,7 +79,10 @@
     <welcome-file-list>
         <welcome-file>SiteLogin.jsp</welcome-file>
     </welcome-file-list>
-    
+    <servlet-mapping>
+        <servlet-name>LocationServlet</servlet-name>
+        <url-pattern>/LocationServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             60

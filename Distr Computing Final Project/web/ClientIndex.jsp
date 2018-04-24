@@ -14,8 +14,11 @@
 </c:if>
 
 <c:if test="${clientList == null}">
-    <c:redirect url="${pageContext.request.contextPath}/ClientServlet" context="/clientList"/>
+    <c:redirect url="/ClientServlet">
+        <c:param name="client" value="list"/>
+    </c:redirect>
 </c:if> 
+
 
 <!DOCTYPE html>
 <html>
@@ -35,8 +38,10 @@
         <h1>List of marketing clients</h1>
         <table cellpadding="5" border="1">
             <thead>
-            <th>Client ID</th>
-            <th>Agent Id</th>
+            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+            <th>ID</th>
+            <th>Agent ID</th>
+            </c:if>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Street Number</th>
@@ -56,7 +61,10 @@
             <tbody>
                 <c:forEach var="client" items="${clientList}">
                     <tr>
+                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                        <td><c:out value="${client.id}"/></td>
                         <td><c:out value="${client.agentId}"/></td>
+                        </c:if>
                         <td><c:out value="${client.firstName}"/></td>
                         <td><c:out value="${client.lastName}"/></td>
                         <td><c:out value="${client.streetNumber}"/></td>
