@@ -49,14 +49,32 @@ public class LoginServlet extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");
 
+        String action = request.getParameter("log");
         
         HttpSession session = request.getSession();
         //session.setAttribute("sess", sess);
         //String sess = (String)session.getAttribute("sess"); 
         
+        switch(action){
+            case "login":
+                login(request, response, session);
+                break;
+            case "logout":
+                logout(request, response, session);
+                break;
+            default:
+                response.sendRedirect("SiteLogin.jsp");
+                break;
+        }
+        
+    }
+    
+    protected void login(HttpServletRequest request, HttpServletResponse response, HttpSession session) 
+            throws IOException, ServletException{
+        
         String name = request.getParameter("name");
         String pass = request.getParameter("pass");
-
+        
         int[] res = checkCredentials(name, pass);
         
         switch (res[0]) {
@@ -78,7 +96,8 @@ public class LoginServlet extends HttpServlet {
                 break;
         }
     }
-
+    
+    
     protected int[] checkCredentials(String name, String pass)
             throws IOException, ServletException {
         
@@ -103,6 +122,11 @@ public class LoginServlet extends HttpServlet {
         return res;
     }
 
+    protected void logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws IOException{
+        
+        session.invalidate();
+        response.sendRedirect("SiteLogin.jsp");
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

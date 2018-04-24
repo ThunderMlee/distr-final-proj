@@ -14,17 +14,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Login page</title>
+        <link href="CSS/LocalLogin.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <h1>Login</h1> <br />
         
         <form action="${pageContext.request.contextPath}/LoginServlet" method="POST" name="loginForm">
-
+            <input type="hidden" name="log" value="login"/>
             <p>Username: </p> <input type="text" name="name"/><br/>
             <p>Password: </p> <input type="password" name="pass"/><br/>
-            <input type="submit" name="login" value="Login"/>
+            <input type="submit" value="Login"/>
             <br/>
             <br/>
             <a href="new">Create an Account</a>

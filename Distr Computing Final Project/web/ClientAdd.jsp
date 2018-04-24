@@ -15,12 +15,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Create New Client</title>
+        <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalTables.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <!--Table for creating new client-->
-        <form action="insert" method="POST" name="addClientForm">
+        <form action="${pageContext.request.contextPath}/ClientServlet" method="POST" name="addClientForm">
             <input type="hidden" name="client" value="add"/>
             <table>
                 <tr>

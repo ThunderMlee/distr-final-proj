@@ -13,13 +13,19 @@
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
+<c:if test="${request.getAttribute('LocData') == null}">
+    <c:redirect url="/LocationServlet">
+        <c:param name="location" value="list"/>
+    </c:redirect>
+</c:if> 
+
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Location Index</title>
-    </head>
-    <body>
+        <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalTables.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript">
             function editRecord(id) {
                 url = "EditRecordServlet";
@@ -30,33 +36,45 @@
                 window.location.href = "http://localhost:8080/Distr_Computing_Final_Project/" + url + "?id=" + id;
             }
         </script>
-        <table cellpadding="5" border="1">
-            <thead>
-            <th>ID</th>
-            <th>Location Name</th>
-            <th>Distribution Capacity</th>
-        </thead>
-        <tbody>
-            <%Iterator itr;%>
-            <%List data = (List) request.getAttribute("LocData");
-                for (itr = data.iterator(); itr.hasNext();) {%>
-            <tr>
+    </head>
+    <body>
 
-                <% String s = (String) itr.next();%>
 
-                <td><%=s%></td>
+    <center>
+        <a href="LocationAdd.jsp">Add new location</a>
+    </center>
 
-                <td><%= itr.next()%></td>
-                <td><%= itr.next()%></td>
+    <table cellpadding="5" border="1">
+        <thead>
+        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+        <th>ID</th>
+        </c:if>
+        <th>Location Name</th>
+        <th>Distribution Capacity</th>
+    </thead>
+    <tbody>
+        <%Iterator itr;%>
+        <%List data = (List) request.getAttribute("LocData");
+            for (itr = data.iterator(); itr.hasNext();) {%>
+        <tr>
 
-                <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                <td><input type=submit value="Edit" name="edit" onclick="editRecord(<%=s%>);"/></td>
-                <td><input type=submit value="Delete" name="delete" onclick="deleteRecord(<%=s%>);"/></td>
-                </c:if>
-                <%}%>
-            </tr>
+            <% String s = (String) itr.next();%>
 
-        </tbody>
-    </table>
+            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+            <td><%=s%></td>
+            </c:if>
+
+            <td><%= itr.next()%></td>
+            <td><%= itr.next()%></td>
+
+            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+            <td><input type=submit value="Edit" name="edit" onclick="editRecord(<%=s%>);"/></td>
+            <td><input type=submit value="Delete" name="delete" onclick="deleteRecord(<%=s%>);"/></td>
+            </c:if>
+            <%}%>
+        </tr>
+
+    </tbody>
+</table>
 </body>
 </html>

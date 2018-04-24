@@ -14,22 +14,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Insert location</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>New location</title>
+        <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <form action="InsertDataServlet" method="POST" name="locationAddForm">
+        <form action="${pageContext.request.contextPath}/LocationServlet" method="POST" name="locationAddForm">
             <input type="hidden" name="location" value="add"/>
             <table>
-                  <tr>
+                <tr>
                     <td>Location Name</td>
                     <td><input type="text" name="locationName"/></td>
                 </tr>
-                  <tr>
+                <tr>
                     <td>Distribution Capacity</td>
                     <td><input type="text" name="distributionCapacity"/></td>
                 </tr>
-                  <tr>
+                <tr>
                     <td></td>
                     <td><input type="submit" value="Submit"/></td>
                 </tr>

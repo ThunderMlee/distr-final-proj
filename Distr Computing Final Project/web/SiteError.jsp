@@ -16,8 +16,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Error...</title>
+        <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <h3>Error: <%=(MySQLSyntaxErrorException) request.getAttribute("Error")%></h3> <br />

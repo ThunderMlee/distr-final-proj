@@ -1,0 +1,40 @@
+/* 
+    Created on : Apr 24, 2018, 5:15:35 PM
+    Author     : Thomas
+*/
+
+table{
+    border-style: solid;
+    border-width: 1px;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+th, td{
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+th{
+    background-color: #D1D1D1;
+    font-weight: bold;
+}
+
+td{
+    background-color: #FAFAFA;
+}
+
+tr:nth-child(even) td{
+    background-color: #F1F1F1
+}
+
+tr:nth-child(odd) td{
+    background-color: #FFF
+}
+
+tr td:hover{
+    background: #666;
+    color: #FFF;
+    cursor: cell;
+    transition: background 0.5s linear;
+}
