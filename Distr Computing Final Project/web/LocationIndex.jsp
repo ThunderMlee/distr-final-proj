@@ -26,6 +26,7 @@
         <title>Location Index</title>
         <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
         <link href="CSS/GlobalTables.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalNav.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript">
             function editRecord(id) {
                 url = "EditRecordServlet";
@@ -38,43 +39,54 @@
         </script>
     </head>
     <body>
+        <div id="wrapper">
+            <div id="title">
+                <h1>List of Locations</h1>
+                <div class="navBar">
+                    <a href="SiteHome.jsp">Home</a>
+                    <a href="LocationIndex.jsp" class="active">Locations</a>
+                    <a href="AgentIndex.jsp">Agents</a>
+                    <a href="ClientIndex.jsp">Clients</a>
+                    <a href="OrderIndex.jsp">Orders</a>
+                    <a href="SiteError.jsp">Error</a>
+                </div>
+            </div>
+            <center>
+                <table cellpadding="5" border="1">
+                    <thead>
+                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                        <th>ID</th>
+                        </c:if>
+                    <th>Location Name</th>
+                    <th>Distribution Capacity</th>
+                    </thead>
+                    <tbody>
+                        <%Iterator itr;%>
+                        <%List data = (List) request.getAttribute("LocData");
+                            for (itr = data.iterator(); itr.hasNext();) {%>
+                        <tr>
 
+                            <% String s = (String) itr.next();%>
 
-    <center>
-        <a href="LocationAdd.jsp">Add new location</a>
-    </center>
+                            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                                <td><%=s%></td>
+                            </c:if>
 
-    <table cellpadding="5" border="1">
-        <thead>
-        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-        <th>ID</th>
-        </c:if>
-        <th>Location Name</th>
-        <th>Distribution Capacity</th>
-    </thead>
-    <tbody>
-        <%Iterator itr;%>
-        <%List data = (List) request.getAttribute("LocData");
-            for (itr = data.iterator(); itr.hasNext();) {%>
-        <tr>
+                            <td><%= itr.next()%></td>
+                            <td><%= itr.next()%></td>
 
-            <% String s = (String) itr.next();%>
+                            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                                <td><input type=submit value="Edit" name="edit" onclick="editRecord(<%=s%>);"/></td>
+                                <td><input type=submit value="Delete" name="delete" onclick="deleteRecord(<%=s%>);"/></td>
+                                </c:if>
+                                <%}%>
+                        </tr>
 
-            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-            <td><%=s%></td>
-            </c:if>
-
-            <td><%= itr.next()%></td>
-            <td><%= itr.next()%></td>
-
-            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-            <td><input type=submit value="Edit" name="edit" onclick="editRecord(<%=s%>);"/></td>
-            <td><input type=submit value="Delete" name="delete" onclick="deleteRecord(<%=s%>);"/></td>
-            </c:if>
-            <%}%>
-        </tr>
-
-    </tbody>
-</table>
-</body>
+                    </tbody>
+                </table>
+                <input type="button" onclick="location.href = 'LocationAdd.jsp'" value="Add New Location" class="btnAdd"/>
+            </center>
+            <div id="foot"><p>Distribution Assignment</p></div>
+        </div>
+    </body>
 </html>

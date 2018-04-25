@@ -8,6 +8,7 @@ table{
     border-width: 1px;
     border-spacing: 0;
     border-collapse: collapse;
+    margin: 20px;
 }
 
 th, td{
@@ -37,4 +38,18 @@ tr td:hover{
     color: #FFF;
     cursor: cell;
     transition: background 0.5s linear;
+}
+
+.btnAdd{
+    border: none;
+    color: white;
+    border-radius: 20px;
+    transition: background 0.1s linear;
+    background-color: graytext;
+}
+
+.btnAdd:hover{
+    cursor: pointer;
+    transition: background 0.25s linear;
+    background-color: rgb(50, 50, 50);
 }

@@ -1,0 +1,60 @@
+#title{
+    background-image: url("images/glass2.png");
+    background: rgba(25,25,25,0.85);
+    color: rgba(226, 235, 245, .75);
+    padding: 10px 10px 0px 10px;
+}
+
+#title h1{
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+#wrapper{
+    min-height: 100%;
+    position: relative;
+}
+
+.navBar{
+    overflow: hidden;
+    margin-left: 20px;
+}
+
+.navBar a{
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navBar a:hover {
+    background-color: #ddd;
+    color: black;
+    transition: linear 0.15s;
+}
+
+.active {
+    background-color: orangered;
+    color: white;
+}
+
+#foot{
+    background-image: url("images/glass2.png");
+    background: rgba(25,25,25,0.85);
+    color: rgba(226, 235, 245, .75);
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+body, html{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}

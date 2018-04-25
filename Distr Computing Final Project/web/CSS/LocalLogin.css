@@ -1,44 +1,94 @@
-/* 
-    Created on : Apr 24, 2018, 5:16:32 PM
-    Author     : Thomas
-*/
+#bgPage{
+    background-image: url("images/testGif.gif");
+    height: 110%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 
-*{
-    font-family: helvetica;
-}
+    filter: blur(6px);
 
-#title{
-    text-align: center;
+    position: fixed;
+    left: -20px;
+    right: -20px;
+    top: -20px;
+    z-index: -1;
 }
 
 p{
     font-weight: bold;
+    color: white;
 }
 
 form {
+
+    background-image: url("images/glass2.png");
+    background: rgba(80,80,80,0.6);
     margin: auto;
     width: 400px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: 3px solid #f1f1f1;
+    padding: 20px;
+    border: 1px solid #f1f1f1;
+    border-radius: 45px;
+    border-color: rgba(45, 45, 45, .5);
 }
 
 input[type=text], input[type=password] {
     width: 100%;
-    padding: 12px 20px;
+    color: whitesmoke;
+    font-size: 16pt;
+    padding: 8px 20px;
+    margin-bottom: 10px;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: none;
+    border-bottom: 2px solid #ccc;
     box-sizing: border-box;
+    border-radius: 8px;
+
+    background: rgba(255,255,255,0);
+
+    font-weight: bold;
+}
+input[type=text]{
+    background: url(images/person.png) no-repeat scroll 7px 7px;
+    background-size: 23px;
+    padding-left: 30px;
+    text-indent: 5px;
+}
+
+input[type=password]{
+    background: url(images/key.png) no-repeat scroll 7px 7px;
+    background-size: 23px;
+    padding-left: 30px;
+    text-indent: 5px;
+}
+
+input:focus{
+    outline: none;
 }
 
 input[type=submit]{
     margin-top: 10px;
     border: none;
-    background-color: powderblue;
+    font-weight: bold;
+    font-size: 12pt;
+    color: white;
     width: 100%;
     height: 30px;
+    border-radius: 20px;
+    transition: background 0.1s linear;
+    background-color: black;
+}
+
+input[type=submit]:hover{
+    cursor: pointer;
+    transition: background 0.25s linear;
+    background-color: rgb(50, 50, 50);
+    border: 1px solid white;
 }
 
 #forgot{
     float: right;
+}
+
+a{
+    color: whitesmoke;
 }
