@@ -50,7 +50,7 @@ public class OrderDao {
     public int addOrder(Order orderObj) {
         int res = 0;
         String sql = "INSERT INTO orders (agentId , clientId, flyerQty, flyerLayout, flyerImg, personalCopy, PaymentInformation, invoiceNumber, comments, isFlyerArtApproved, isPaymentReceived)"
-                + " VALUES (?, ?, ?, ?)";
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = getConnection()) {
 
             if (conn != null) {

@@ -53,7 +53,7 @@ public class ClientServlet extends HttpServlet {
         String action = request.getParameter("client");
         
         switch(action){
-            case "Add":
+            case "add":
                 addClient(request, response);
                 break;
             case "list":
@@ -93,7 +93,7 @@ public class ClientServlet extends HttpServlet {
                 city,province,postalCode,telOffice,telCell,email,company,companyType, clientDao);
 
         if (res > 0) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("list");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("ClientIndex.jsp");
             dispatcher.forward(request, response);
         } else {
             response.sendRedirect("SiteError.jsp");

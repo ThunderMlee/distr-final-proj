@@ -19,16 +19,16 @@
         <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <form action="${pageContext.request.contextPath}/OrderServlet" enctype="multipart/form-data" method="POST" name="orderAddForm">
+        <form action="${pageContext.request.contextPath}/OrderServlet" id="order" method="POST" name="orderAddForm">
             <input type="hidden" name="order" value="add"/>
             <table>
                 <tr>
                     <td>Agent</td>
-                    <td><input type="text" name="locationName"></td>
+                    <td><input type="text" name="agentID"></td>
                 </tr>
                 <tr>
                     <td>Client</td>
-                    <td><input type="text" name="distributionCapacity"></td>
+                    <td><input type="text" name="clientID"></td>
                 </tr>
                 <tr>
                     <td>Flyer quantity</td>
@@ -37,18 +37,20 @@
                 <tr>
                     <td>Flyer Layout</td>
                     <td>
-                        <label>Landscape</label><input type="radio" value="landscape" name="flyerLayout"/><br/>
-                        <label>Portrait</label><input type="radio" value="portrait" name="flyerLayout"/><br/>
-                        <label>Both</label><input type="radio" value="both" name="flyerLayout"/><br/>
+                        <select name="flyerLayout">
+                            <option value="landscape">Landscape</option>
+                            <option value="portrait">Portrait</option>
+                            <option value="both">Both</option>
+                        </select>
                     </td>
-                </tr>
-                <tr>
-                    <td>Flyer Image</td>
-                    <td><input type="file" name="flyerImg"/></td>
                 </tr>
                 <tr>
                     <td>Personal Copy</td>
                     <td><input type="text" name="personalCopy"></td>
+                </tr>
+                <tr>
+                    <td>Flyer Image</td>
+                    <td><input type="file" name="flyerImg"/></td>
                 </tr>
                 <tr>
                     <td>Invoice Number</td>
@@ -62,8 +64,8 @@
                     <td>Is flyer art approved?</td>
                     <td>
                         <br/>
-                        <label>Yes</label><input type="radio" value="yes" name="artApprove"/> <br/>
-                        <label>No</label><input type="radio" value="no" name="artApprove"/> <br/>
+                        <label>Yes</label><input type="radio" value="true" name="artApprove"/> <br/>
+                        <label>No</label><input type="radio" value="false" name="artApprove"/> <br/>
                         <br/>
                     </td>
                 </tr>
@@ -71,14 +73,15 @@
                     <td>Has payment received?</td>
                     <td>
                         <br/>
-                        <label>Yes</label><input type="radio" value="yes" name="payReceive"/> <br/>
-                        <label>No</label><input type="radio" value="no" name="payReceive"/> <br/>
+                        <label>Yes</label><input type="radio" value="true" name="payReceive"/> <br/>
+                        <label>No</label><input type="radio" value="false" name="payReceive"/> <br/>
                         <br/>
                     </td>
                 </tr>
+                
                 <tr>
                     <td></td>
-                    <td><input type="submit" value="Submit"></td>
+                    <td><input type="submit" value="Submit" /></td>
                 </tr>
             </table>
         </form>

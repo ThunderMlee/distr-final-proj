@@ -13,7 +13,7 @@
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
-<c:if test="${request.getAttribute('LocData') == null}">
+<c:if test="${requestScope.LocData == null}">
     <c:redirect url="/LocationServlet">
         <c:param name="location" value="list"/>
     </c:redirect>
@@ -54,32 +54,32 @@
             <center>
                 <table cellpadding="5" border="1">
                     <thead>
-                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                        <th>ID</th>
-                        </c:if>
+                    <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                    <th>ID</th>
+                    </c:if>
                     <th>Location Name</th>
                     <th>Distribution Capacity</th>
+                    <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                    <th>Action</th>
+                    </c:if>
                     </thead>
                     <tbody>
                         <%Iterator itr;%>
                         <%List data = (List) request.getAttribute("LocData");
                             for (itr = data.iterator(); itr.hasNext();) {%>
                         <tr>
+                          <% String s = (String) itr.next();%>
 
-                            <% String s = (String) itr.next();%>
-
-                            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                                <td><%=s%></td>
-                            </c:if>
-
-                            <td><%= itr.next()%></td>
-                            <td><%= itr.next()%></td>
-
-                            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                                <td><input type=submit value="Edit" name="edit" onclick="editRecord(<%=s%>);"/></td>
-                                <td><input type=submit value="Delete" name="delete" onclick="deleteRecord(<%=s%>);"/></td>
-                                </c:if>
-                                <%}%>
+                          <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                          <td><%=s%></td>
+                          </c:if>
+                          <td><%= itr.next()%></td>
+                          <td><%= itr.next()%></td>
+                          <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                          <td><input type=submit value="Edit" name="edit" onclick="editRecord(<%=s%>);"/></td>
+                          <td><input type=submit value="Delete" name="delete" onclick="deleteRecord(<%=s%>);"/></td>
+                          </c:if>
+                          <%}%>
                         </tr>
 
                     </tbody>
