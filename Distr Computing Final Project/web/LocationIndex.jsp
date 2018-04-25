@@ -13,7 +13,7 @@
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
-<c:if test="${request.getAttribute('LocData') == null}">
+<c:if test="${requestScope.LocData == null}">
     <c:redirect url="/LocationServlet">
         <c:param name="location" value="list"/>
     </c:redirect>
@@ -51,6 +51,9 @@
         </c:if>
         <th>Location Name</th>
         <th>Distribution Capacity</th>
+        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+        <th>Action</th>
+        </c:if>
     </thead>
     <tbody>
         <%Iterator itr;%>

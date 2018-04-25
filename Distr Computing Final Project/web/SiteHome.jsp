@@ -28,6 +28,7 @@
             <input type="button" value="Client Index" onclick="location.href='ClientIndex.jsp';"/> <br/>
             <input type="button" value="Order Index" onclick="location.href='OrderIndex.jsp';"/> <br/>
             <input type="button" value="Error Page" onclick="location.href='SiteError.jsp';"/> <br/>
+            <input type="button" value="logout" name="log" onclick="$location.href='${pageContext.request.contextPath}/LoginServlet';"/>
         </div>
     </body>
 </html>

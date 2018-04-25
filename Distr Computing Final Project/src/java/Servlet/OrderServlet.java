@@ -4,6 +4,7 @@ import Services.OrderService;
 import dao.OrderDao;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,7 +29,8 @@ public class OrderServlet extends HttpServlet {
     String jdbcURL;
 
     @Override
-    public void init() throws ServletException {
+    public void init() 
+            throws ServletException {
         jdbcURL = getServletContext().getInitParameter("jdbcURL");
         jdbcUserName = getServletContext().getInitParameter("jdbcUserName");
         jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
@@ -36,7 +38,7 @@ public class OrderServlet extends HttpServlet {
         orderDao = new OrderDao(jdbcURL, jdbcUserName, jdbcPassword);
         orderService = new OrderService();
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -49,42 +51,45 @@ public class OrderServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String action = request.getParameter("order");
-        
-        switch(action){
-            case "list":
-                viewListOrder(request, response);
-                break;
-            case "edit":
-                editOrder(request, response);
-                break;
-            case "insert":
-                insertOrder(request, response);
-                break;
-            case "delete":
-                deleteOrder(request, response);
-                break;
-            case "update":
-                updateOrder(request, response);
-                break;
-            default:
-                response.sendRedirect("SiteHome.jsp");
-                break;
+        try {
+            switch (action) {
+                case "add":
+                    addOrder(request, response);
+                    break;
+                case "list":
+                    viewListOrder(request, response);
+                    break;
+                case "edit":
+                    editOrder(request, response);
+                    break;
+                case "delete":
+                    deleteOrder(request, response);
+                    break;
+                case "update":
+                    updateOrder(request, response);
+                    break;
+                default:
+                    response.sendRedirect("SiteHome.jsp");
+                    break;
+            }
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+            
         }
-        
+
     }
 
-    private void insertOrder(HttpServletRequest request, HttpServletResponse response)
+    private void addOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
 
-        FileInputStream in = new FileInputStream(request.getParameter("flyerImg"));
-        
+        //FileInputStream in = ;
         int agentID = Integer.parseInt(request.getParameter("agentID"));
         int clientID = Integer.parseInt(request.getParameter("clientID"));
         int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
         String flyerLayout = request.getParameter("flyerLayout");
-        Blob flyerImg = (Blob) in.getChannel();
+        Blob flyerImg = (Blob) request.getPart("flyerImg");
         int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
         String paymentInfo = request.getParameter("paymentInfo");
         int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
@@ -93,7 +98,7 @@ public class OrderServlet extends HttpServlet {
         boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("isPaymentReceived"));
 
         int res = orderService.addOrder(agentID, clientID, flyerQty, flyerLayout, flyerImg, personalCopy, paymentInfo,
-            invoiceNum, comments, isFlyerArtApproved, isPaymentReceived, orderDao);
+                invoiceNum, comments, isFlyerArtApproved, isPaymentReceived, orderDao);
 
         if (res > 0) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("list");
@@ -103,10 +108,10 @@ public class OrderServlet extends HttpServlet {
         }
 
     }
-    
+
     private void viewListOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
-        
+
         ArrayList<Order> orderList = new ArrayList();
         orderList = orderService.viewOrder(orderDao);
 
@@ -139,7 +144,7 @@ public class OrderServlet extends HttpServlet {
             throws IOException, ServletException {
 
         FileInputStream in = new FileInputStream(request.getParameter("flyerImg"));
-        
+
         int ID = Integer.parseInt(request.getParameter("ID"));
         int agentID = Integer.parseInt(request.getParameter("agentID"));
         int clientID = Integer.parseInt(request.getParameter("clientID"));
@@ -154,7 +159,7 @@ public class OrderServlet extends HttpServlet {
         boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("isPaymentReceived"));
 
         Order orderObj = new Order(ID, agentID, clientID, flyerQty, flyerLayout, flyerImg, personalCopy, paymentInfo, invoiceNum, comments, isFlyerArtApproved, isPaymentReceived);
-        
+
         try {
             orderService.updateOrder(orderObj, orderDao);
         } catch (SQLException ex) {
@@ -162,7 +167,7 @@ public class OrderServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
             rd.forward(request, response);
         }
-        
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("OrderIndex.jsp");
         dispatcher.forward(request, response);
     }
@@ -184,8 +189,7 @@ public class OrderServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("OrderIndex.jsp");
         dispatcher.forward(request, response);
     }
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -214,7 +218,7 @@ public class OrderServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *

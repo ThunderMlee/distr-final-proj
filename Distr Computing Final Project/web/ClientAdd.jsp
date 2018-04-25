@@ -26,10 +26,6 @@
             <input type="hidden" name="client" value="add"/>
             <table>
                 <tr>
-                    <td>Client ID:</td>
-                    <td><input type="text" name="id" value="${client.id}"/></td>
-                </tr>
-                <tr>
                     <td>Agent ID:</td>
                     <td><input type="text" name="agentId" value="${client.agentId}"/></td>
                 </tr>
