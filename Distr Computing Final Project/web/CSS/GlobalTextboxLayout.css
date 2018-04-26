@@ -1,0 +1,51 @@
+.left {
+    width: 25%;
+    float: left;
+    text-align: right;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+.right {
+    width: 65%;
+    margin-left: 10px;
+    float:left;
+    margin-bottom: 4px;
+    text-indent: 8px;
+}
+
+input:focus{
+    outline: none;
+}
+
+#textboxes{
+    border: 5px black solid;
+    width: 80%;
+    padding: 35px;
+    margin: auto;
+    margin-top: 35px;
+    overflow: auto;
+}
+
+input[type=text]{
+    border-radius: 20px;
+}
+
+input[type=password]{
+    border-radius: 20px;
+}
+
+input[type=submit]{
+    border: none;
+    color: black;
+    border-radius: 20px;
+    transition: background 0.1s linear;
+    background-color: lightgray;
+    float: right;
+}
+
+input[type=submit]:hover{
+    color: white;
+    cursor: pointer;
+    transition: background 0.25s linear;
+    background-color: rgb(50, 50, 50);
+}

@@ -18,7 +18,8 @@
         <title>Home</title>
         <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
         <link href="CSS/GlobalNav.css" rel="stylesheet" type="text/css"/>
-        <link href="CSS/LocalHome.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalBody.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalSiteBack.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div id="bgPage"></div>
