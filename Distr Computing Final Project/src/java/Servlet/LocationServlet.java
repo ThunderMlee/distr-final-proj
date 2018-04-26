@@ -56,6 +56,9 @@ public class LocationServlet extends HttpServlet {
             case "list":
                 viewListLocation(request, response);
                 break;
+            case "edit":
+                editLocation(request, response);
+                break;
             case "update":
                 updateLocation(request, response);
                 break;
@@ -91,12 +94,12 @@ public class LocationServlet extends HttpServlet {
             rd.forward(request, response);
         } finally {
             request.setAttribute("LocData", lst);
+            conn.close();
             RequestDispatcher rd = request.getRequestDispatcher("LocationIndex.jsp");
             rd.forward(request, response);
 
             lst.clear();
             out.close();
-
         }
     }
 
@@ -123,8 +126,7 @@ public class LocationServlet extends HttpServlet {
             rd.forward(request, response);
         } finally {
             conn.close();
-            RequestDispatcher rd = request.getRequestDispatcher("LocationIndex.jsp");
-            rd.forward(request, response);
+            response.sendRedirect("LocationIndex.jsp");
         }
     }
 
@@ -136,17 +138,25 @@ public class LocationServlet extends HttpServlet {
             id = request.getParameter("id");
             dbconn = new DatabaseConnection();
             conn = dbconn.setConnection();
-            stmt = conn.createStatement();
             query = "SELECT * FROM location "
-                    + "WHERE id = " + id;
+                + "WHERE id = " + id;
+            stmt = conn.createStatement();
+
             res = dbconn.getResult(query, conn);
+            while (res.next()) {
+                lst.add(res.getString("id"));
+                lst.add(res.getString("locationName"));
+                lst.add(res.getString("distributionCapacity"));
+            }
+            
+            res.close();
         } catch (SQLException ex) {
             request.setAttribute("Error", ex);
             RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
             rd.forward(request, response);
         } finally {
+            request.setAttribute("EditData", lst);
             conn.close();
-            request.setAttribute("EditData", res);
             RequestDispatcher rd = request.getRequestDispatcher("LocationEdit.jsp");
             rd.forward(request, response);
         }
@@ -178,8 +188,7 @@ public class LocationServlet extends HttpServlet {
         } catch (NumberFormatException | SQLException ex) {
             ex.printStackTrace();
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            rd.forward(request, response);
+            response.sendRedirect("LocationIndex.jsp");
             out.close();
         }
     }
@@ -197,8 +206,7 @@ public class LocationServlet extends HttpServlet {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
-            RequestDispatcher rd = request.getRequestDispatcher("LocationIndex.jsp");
-            rd.forward(request, response);
+            response.sendRedirect("LocationIndex.jsp");
             out.close();
         }
     }

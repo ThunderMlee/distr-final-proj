@@ -1,6 +1,7 @@
 package Services;
 
 import dao.OrderDao;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import model.Order;
  */
 public class OrderService {
     
-    public int addOrder(int agentID, int clientID, int flyerQty, String flyerLayout, Blob flyerImg, int personalCopy, String paymentInfo,
+    public int addOrder(int agentID, int clientID, int flyerQty, String flyerLayout, InputStream flyerImg, int personalCopy, String paymentInfo,
             int invoiceNum, String comments, boolean isFlyerArtApproved, boolean isPaymentReceived, OrderDao dao) {
         int res = 0;
         Order orderObj = new Order();

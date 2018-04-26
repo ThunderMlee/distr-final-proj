@@ -49,10 +49,10 @@
                         <c:if test="${sessionScope.ROLE == 'ADMIN'}">
                         <th>ID</th>
                         </c:if>
-                    <th>First Name</th>
-                    <th>Last Number</th>
-                    <th>Phone No.</th>
-                    <th>Email</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone No.</th>
+                        <th>Email</th>
                         <c:if test="${sessionScope.ROLE == 'ADMIN'}">
                         <th>Action</th>
                         </c:if>
@@ -68,11 +68,11 @@
                                 <td><c:out value="${agent.phoneNo}"/></td>
                                 <td><c:out value="${agent.email}"/></td>
                                 <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                                    <td><a href="edit?id=<c:out value='${agent.ID}'/>">
+                                    <td><a href="${pageContext.request.contextPath}/AgentEdit.jsp?id=${agent.ID}">
                                             Edit
                                         </a>
                                         &nbsp;&nbsp;
-                                        <a href="delete?id=<c:out value='${agent.ID}'/>">
+                                        <a href="${pageContext.request.contextPath}/AgentServlet?id=${agent.ID}&amp;agent=delete">
                                             Delete
                                         </a>
                                     </td>

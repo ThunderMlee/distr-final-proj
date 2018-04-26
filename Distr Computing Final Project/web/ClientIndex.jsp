@@ -65,9 +65,9 @@
                         <th>Email</th>
                         <th>Company</th>
                         <th>Company Type</th>
-                            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                            <th>Action</th>
-                            </c:if>
+                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                        <th>Action</th>
+                        </c:if>
                         </thead>
                         <tbody>
                             <c:forEach var="client" items="${clientList}">
@@ -89,11 +89,11 @@
                                     <td><c:out value="${client.company}"/></td>
                                     <td><c:out value="${client.companyType}"/></td>
                                     <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                                        <td><a href="edit?id=<c:out value='${client.id}'/>">
+                                        <td><a href="${pageContext.request.contextPath}/ClientEdit.jsp?id=${client.id}">
                                                 Edit
                                             </a>
                                             &nbsp;&nbsp;
-                                            <a href="delete?id=<c:out value='${client.id}'/>">
+                                            <a href="${pageContext.request.contextPath}/ClientServlet?id=${client.id}&amp;client=delete">
                                                 Delete
                                             </a>
                                         </td>

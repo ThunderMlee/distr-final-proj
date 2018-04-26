@@ -11,32 +11,35 @@
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
-<c:if test="${agent == null}">
-    <c:redirect url="AgentIndex.jsp"/>
-</c:if>
+<c:if test="${requestScope.agent == null}">
+    <c:redirect url="/AgentServlet">
+        <c:param name="agent" value="edit"/>
+        <c:param name="id" value="${param.id}"/>
+    </c:redirect>
+</c:if> 
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Edit agent ${agent.firstName}</title>
+        <title>Edit agent ${agent.fName}</title>
         <link href="CSS/LocalAgentEdit.css" rel="stylesheet" type="text/css"/>
         <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <form action="update" method="POST" name="editAgentForm">
+        <form action="AgentServlet" method="POST" name="editAgentForm">
             <!-- the hidden input is use to get the id that you need to do the edit and delete function-->
-            <input type="hidden" name="agent" value="edit"/>
-            <input type="hidden" name="id" id="marketid" value="${agent.id}"/>
+            <input type="hidden" name="agent" value="update"/>
+            <input type="hidden" name="id" value="${agent.ID}"/>
             
             <table cellpadding="5" border="1">
                 <tr>
                     <th>First Name: </th>
-                    <td><input type="text" name="fname" id="fname" value="${agent.firstName}"></td>
+                    <td><input type="text" name="fname" id="fname" value="${agent.fName}"></td>
                 </tr>
                 <tr>
                     <th>Last Name: </th>
-                    <td><input type="text" name="lname" id="lname" value="${agent.lastName}"></td>
+                    <td><input type="text" name="lname" id="lname" value="${agent.lName}"></td>
                 </tr>
                 <tr>
                     <th>Phone No.: </th>
@@ -50,11 +53,11 @@
 
                 <tr>
                     <th>Username</th>
-                    <td><input type="text" name="uname" id="uname" value="${agent.userName}"></td>
+                    <td><input type="text" name="uname" id="uname" value="${agent.uName}"></td>
                 </tr>
                 <tr>
                     <th>Password</th>
-                    <td><input type="password" name="pass" id="pass" value="${agent.password}"></td>
+                    <td><input type="password" name="pass" id="pass" value="${agent.pass}"></td>
                 </tr>
 
 
