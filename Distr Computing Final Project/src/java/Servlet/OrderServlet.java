@@ -2,15 +2,8 @@ package Servlet;
 
 import Services.OrderService;
 import dao.OrderDao;
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.nio.file.Paths;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
@@ -21,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import model.Order;
+import sun.misc.IOUtils;
 
 /**
  *
@@ -84,7 +78,6 @@ public class OrderServlet extends HttpServlet {
             }
         } catch (NullPointerException ex) {
             ex.printStackTrace();
-            
         }
 
     }
@@ -94,13 +87,14 @@ public class OrderServlet extends HttpServlet {
         
         InputStream in = null;
         
-        Part flyerImg = request.getPart("flyerImg");
+        Part image = request.getPart("flyerImg");
+        in = image.getInputStream();
         
         int agentID = Integer.parseInt(request.getParameter("agentID"));
         int clientID = Integer.parseInt(request.getParameter("clientID"));
         int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
         String flyerLayout = request.getParameter("flyerLayout");
-        in = flyerImg.getInputStream();
+        byte[] flyerImg = IOUtils.readFully(in, (int) image.getSize(), true);
         int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
         String paymentInfo = request.getParameter("paymentInfo");
         int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
@@ -108,12 +102,11 @@ public class OrderServlet extends HttpServlet {
         boolean isFlyerArtApproved = Boolean.parseBoolean(request.getParameter("isFlyerArtApproved"));
         boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("isPaymentReceived"));
 
-        int res = orderService.addOrder(agentID, clientID, flyerQty, flyerLayout, in, personalCopy, paymentInfo,
+        int res = orderService.addOrder(agentID, clientID, flyerQty, flyerLayout, flyerImg, personalCopy, paymentInfo,
                 invoiceNum, comments, isFlyerArtApproved, isPaymentReceived, orderDao);
 
         if (res > 0) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("OrderAdd.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect("OrderIndex.jsp");
         } else {
             response.sendRedirect("SiteError.jsp");
         }
@@ -154,20 +147,32 @@ public class OrderServlet extends HttpServlet {
     private void updateOrder(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        FileInputStream in = new FileInputStream(request.getParameter("flyerImg"));
-
+        InputStream in = null;
+        
+        Part image = request.getPart("flyerImg");
+        in = image.getInputStream();
+        
         int ID = Integer.parseInt(request.getParameter("ID"));
         int agentID = Integer.parseInt(request.getParameter("agentID"));
         int clientID = Integer.parseInt(request.getParameter("clientID"));
         int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
         String flyerLayout = request.getParameter("flyerLayout");
-        InputStream flyerImg = (Blob) in.getChannel();
+        byte[] flyerImg;
+        
+        if(in.available() != 0){
+            flyerImg = IOUtils.readFully(in, (int) image.getSize(), true);
+        } else {
+            flyerImg = getImage(ID);
+        }
+        
+        
+        
         int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
         String paymentInfo = request.getParameter("paymentInfo");
         int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
         String comments = request.getParameter("comments");
-        boolean isFlyerArtApproved = Boolean.parseBoolean(request.getParameter("isFlyerArtApproved"));
-        boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("isPaymentReceived"));
+        boolean isFlyerArtApproved = Boolean.parseBoolean(request.getParameter("artApprove"));
+        boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("payReceive"));
 
         Order orderObj = new Order(ID, agentID, clientID, flyerQty, flyerLayout, flyerImg, personalCopy, paymentInfo, invoiceNum, comments, isFlyerArtApproved, isPaymentReceived);
 
@@ -175,12 +180,11 @@ public class OrderServlet extends HttpServlet {
             orderService.updateOrder(orderObj, orderDao);
             response.sendRedirect("OrderIndex.jsp");
         } catch (SQLException ex) {
+            ex.printStackTrace();
             request.setAttribute("Error", ex);
             RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
             rd.forward(request, response);
         }
-
-        
     }
 
     private void deleteOrder(HttpServletRequest request, HttpServletResponse response)
@@ -191,14 +195,27 @@ public class OrderServlet extends HttpServlet {
 
         try {
             orderService.deleteOrder(orderObj, orderDao);
+            response.sendRedirect("OrderIndex.jsp");
         } catch (SQLException ex) {
             request.setAttribute("Error", ex);
             RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
             rd.forward(request, response);
         }
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderIndex.jsp");
-        dispatcher.forward(request, response);
+    }
+    
+    private byte[] getImage(int ID){
+        
+        Order orderObj = new Order(ID);
+        
+        byte[] img = null;
+        
+        try {
+            img = orderService.getImage(orderObj, orderDao);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return img;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

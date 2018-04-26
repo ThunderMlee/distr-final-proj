@@ -1,8 +1,5 @@
 package model;
 
-import java.io.InputStream;
-import java.sql.Blob;
-
 /**
  *
  * @author GhavinBahra
@@ -14,7 +11,8 @@ public class Order {
     int clientID;
     int flyerQty;
     String flyerLayout; //portrait, landscape, or both
-    InputStream flyerImg;
+    byte[] flyerImg;
+    String flyerImgBase64;
     int personalCopy;//copies requested by the client to keep for themselves
     String paymentInfo; //I think this might be just card number but im not sure
     int invoiceNum;
@@ -30,7 +28,7 @@ public class Order {
         this.ID = ID;
     }
 
-    public Order(int ID, int agentID, int clientID, int flyerQty, String flyerLayout, InputStream flyerImg, int personalCopy, String paymentInfo,
+    public Order(int ID, int agentID, int clientID, int flyerQty, String flyerLayout, byte[] flyerImg, int personalCopy, String paymentInfo,
             int invoiceNum, String comments, boolean isFlyerArtApproved, boolean isPaymentReceived){
         this.ID = ID;
         this.agentID = agentID;
@@ -44,6 +42,14 @@ public class Order {
         this.comments = comments;
         this.isFlyerArtApproved = isFlyerArtApproved;
         this.isPaymentReceived = isPaymentReceived;
+    }
+
+    public String getFlyerImgBase64() {
+        return flyerImgBase64;
+    }
+
+    public void setFlyerImgBase64(String flyerImgBase64) {
+        this.flyerImgBase64 = flyerImgBase64;
     }
     
     public int getID() {
@@ -86,11 +92,11 @@ public class Order {
         this.flyerLayout = flyerLayout;
     }
 
-    public InputStream getFlyerImg() {
+    public byte[] getFlyerImg() {
         return flyerImg;
     }
 
-    public void setFlyerImg(InputStream flyerImg) {
+    public void setFlyerImg(byte[] flyerImg) {
         this.flyerImg = flyerImg;
     }
 
@@ -141,6 +147,4 @@ public class Order {
     public void setIsPaymentReceived(boolean isPaymentReceived) {
         this.isPaymentReceived = isPaymentReceived;
     }
-    
-    
 }

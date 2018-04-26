@@ -75,6 +75,10 @@
                     <td><input type="text" name="personalCopy"/></td>
                 </tr>
                 <tr>
+                    <td>Payment Info</td>
+                    <td><input type="text" name="paymentInfo"/></td>
+                </tr>
+                <tr>
                     <td>Flyer Image</td>
                     <td><img id="dispImg" src="#" alt="Flyer Image"/><input type="file" name="flyerImg" onchange="readURL(this);"/></td>
                 </tr>
@@ -90,8 +94,8 @@
                     <td>Is flyer art approved?</td>
                     <td>
                         <br/>
-                        <label>Yes</label><input type="radio" value="true" name="artApprove"/> <br/>
-                        <label>No</label><input type="radio" value="false" name="artApprove"/> <br/>
+                        <label>Yes</label><input type="radio" value="1" name="artApprove"/> <br/>
+                        <label>No</label><input type="radio" value="0" name="artApprove"/> <br/>
                         <br/>
                     </td>
                 </tr>
@@ -99,8 +103,8 @@
                     <td>Has payment received?</td>
                     <td>
                         <br/>
-                        <label>Yes</label><input type="radio" value="true" name="payReceive"/> <br/>
-                        <label>No</label><input type="radio" value="false" name="payReceive"/> <br/>
+                        <label>Yes</label><input type="radio" value="1" name="payReceive"/> <br/>
+                        <label>No</label><input type="radio" value="0" name="payReceive"/> <br/>
                         <br/>
                     </td>
                 </tr>
