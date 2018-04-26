@@ -59,6 +59,9 @@ public class ClientServlet extends HttpServlet {
             case "list":
                 viewListClient(request, response);
                 break;
+            case "edit":
+                editClient(request, response);
+                break;
             case "update":
                 updateClient(request,response);
                 break;

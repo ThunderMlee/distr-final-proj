@@ -93,11 +93,11 @@ public class AgentServlet extends HttpServlet {
     private void addAgent(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
 
-        String fName = request.getParameter("Fname");
-        String lName = request.getParameter("Lname");
+        String fName = request.getParameter("fName");
+        String lName = request.getParameter("lName");
         String phoneNo = request.getParameter("phone");
         String email = request.getParameter("email");
-        String uName = request.getParameter("Uname");
+        String uName = request.getParameter("uName");
         String pass = request.getParameter("pass");
         String conf = request.getParameter("conf");
 

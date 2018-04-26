@@ -17,22 +17,48 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>New order</title>
         <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
+        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#dispImg')
+                                .attr('src', e.target.result)
+                                .width(150)
+                                .height(200);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
     </head>
     <body>
-        <form action="${pageContext.request.contextPath}/OrderServlet" id="order" method="POST" name="orderAddForm">
+        <form action="${pageContext.request.contextPath}/OrderServlet" method="POST" enctype="multipart/form-data" name="orderAddForm">
             <input type="hidden" name="order" value="add"/>
             <table>
                 <tr>
                     <td>Agent</td>
-                    <td><input type="text" name="agentID"></td>
+                    <td><input type="text" name="agentID"/>
+                        <%--<select name="agentID">
+
+                        </select>--%>
+                    </td>
                 </tr>
                 <tr>
                     <td>Client</td>
-                    <td><input type="text" name="clientID"></td>
+                    <td><input type="text" name="clientID"/>
+                        <%--<select name="clientID">
+
+                        </select>--%>
+                    </td>
                 </tr>
                 <tr>
                     <td>Flyer quantity</td>
-                    <td><input type="text" name="flyerQty"></td>
+                    <td><input type="text" name="flyerQty"/></td>
                 </tr>
                 <tr>
                     <td>Flyer Layout</td>
@@ -46,19 +72,19 @@
                 </tr>
                 <tr>
                     <td>Personal Copy</td>
-                    <td><input type="text" name="personalCopy"></td>
+                    <td><input type="text" name="personalCopy"/></td>
                 </tr>
                 <tr>
                     <td>Flyer Image</td>
-                    <td><input type="file" name="flyerImg"/></td>
+                    <td><img id="dispImg" src="#" alt="Flyer Image"/><input type="file" name="flyerImg" onchange="readURL(this);"/></td>
                 </tr>
                 <tr>
                     <td>Invoice Number</td>
-                    <td><input type="text" name="invoiceNum"></td>
+                    <td><input type="text" name="invoiceNum"/></td>
                 </tr>
                 <tr>
                     <td>Comments</td>
-                    <td><input type="text" name="comments"></td>
+                    <td><input type="text" name="comments"/></td>
                 </tr>
                 <tr>
                     <td>Is flyer art approved?</td>
@@ -78,7 +104,7 @@
                         <br/>
                     </td>
                 </tr>
-                
+
                 <tr>
                     <td></td>
                     <td><input type="submit" value="Submit" /></td>

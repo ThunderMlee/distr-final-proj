@@ -30,12 +30,12 @@
         <link href="CSS/GlobalSiteBack.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript">
             function editRecord(id) {
-                url = "EditRecordServlet";
-                window.location.href = "http://localhost:8080/Distr_Computing_Final_Project/" + url + "?id=" + id;
+                url = "LocationEdit.jsp";
+                window.location.href = "${pageContext.request.contextPath}/" + url + "?id=" + id;
             }
             function deleteRecord(id) {
-                url = "DeleteRecordServlet2";
-                window.location.href = "http://localhost:8080/Distr_Computing_Final_Project/" + url + "?id=" + id;
+                url = "LocationServlet";
+                window.location.href = "${pageContext.request.contextPath}/" + url + "?id=" + id + "&location=delete";
             }
         </script>
     </head>
@@ -56,34 +56,32 @@
             <center>
                 <table cellpadding="5" border="1">
                     <thead>
-                    <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                    <th>ID</th>
-                    </c:if>
-                    <th>Location Name</th>
-                    <th>Distribution Capacity</th>
-                    <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                    <th>Action</th>
-                    </c:if>
+                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                        <th>ID</th>
+                        </c:if>
+                        <th>Location Name</th>
+                        <th>Distribution Capacity</th>
+                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                        <th>Action</th>
+                        </c:if>
                     </thead>
                     <tbody>
                         <%Iterator itr;%>
                         <%List data = (List) request.getAttribute("LocData");
                             for (itr = data.iterator(); itr.hasNext();) {%>
                         <tr>
-                          <% String s = (String) itr.next();%>
+                            <% String s = (String) itr.next();%>
 
-                          <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                          <td><%=s%></td>
-                          </c:if>
-                          <td><%= itr.next()%></td>
-                          <td><%= itr.next()%></td>
-                          <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                          <td><input type=submit value="Edit" name="edit" onclick="editRecord(<%=s%>);"/></td>
-                          <td><input type=submit value="Delete" name="delete" onclick="deleteRecord(<%=s%>);"/></td>
-                          </c:if>
-                          <%}%>
+                            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                            <td><%=s%></td>
+                            </c:if>
+                            <td><%= itr.next()%></td>
+                            <td><%= itr.next()%></td>
+                            <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+                            <td><input type=submit value="Edit" name="edit" onclick="editRecord(<%=s%>);"/><input type=submit value="Delete" name="delete" onclick="deleteRecord(<%=s%>);"/></td>
+                            </c:if>
+                                <%}%>
                         </tr>
-
                     </tbody>
                 </table>
                 <input type="button" onclick="location.href = 'LocationAdd.jsp'" value="Add New Location" class="btnAdd"/>

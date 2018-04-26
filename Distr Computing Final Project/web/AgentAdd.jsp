@@ -24,17 +24,6 @@
         <link href="CSS/GlobalBody.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <!--<form action="insert" method="POST" name="addAgentForm">
-            <input type="hidden" name="agent" value="add"/>
-            <label>First Name: </label><input type="text" name="Fname"/> <br/>
-            <label>Last Name: </label><input type="text" name="Lname"/> <br/>
-            <label>Phone Number: </label><input type="text" name="phone"/> <br/>
-            <label>Email: </label><input type="email" name="email"/> <br/>
-            <label>Username: </label><input type="text" name="Uname"/> <br/>
-            <label>Password: </label><input type="password" name="pass"/> <br/>
-            <label>Re-enter password: </label><input type="password" name="conf"/> <br/>
-            <input type="submit" name="submit" value="Create"/> <br/>
-        </form>-->
         <div id="bgPage"></div>
         <div id="wrapper">
             <div id="title">
@@ -54,35 +43,31 @@
 
                     <div id="body">
                         <label class="left">First Name:</label>
-                        <input type="text" name="id" class="right" />
+                        <input type="text" name="fName" class="right" />
                         </br>
 
                         <label class="left">Last Name:</label>
-                        <input type="text" name="agentId" class="right" />
-                        </br>
-
-                        <label class="left">First Name:</label>
-                        <input type="text" name="firstName" class="right" />
+                        <input type="text" name="lName" class="right" />
                         </br>
 
                         <label class="left">Phone Number:</label>
-                        <input type="text" name="lastName" class="right" />
+                        <input type="text" name="phone" class="right" />
                         </br>
 
                         <label class="left">Email:</label>
-                        <input type="text" name="streetNumber" class="right" />
+                        <input type="text" name="email" class="right" />
                         </br>
 
                         <label class="left">Username:</label>
-                        <input type="text" name="streetName" class="right" />
+                        <input type="text" name="uName" class="right" />
                         </br>
 
                         <label class="left">Password:</label>
-                        <input type="password" name="city" class="right" />
+                        <input type="password" name="pass" class="right" />
                         </br>
 
                         <label class="left">Re-enter password:</label>
-                        <input type="password" name="province" class="right" />
+                        <input type="password" name="conf" class="right" />
                         </br>
 
 

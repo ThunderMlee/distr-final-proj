@@ -2,23 +2,31 @@ package Servlet;
 
 import Services.OrderService;
 import dao.OrderDao;
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
+import java.nio.file.Paths;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import model.Order;
 
 /**
  *
  * @author GhavinBahra
  */
+@MultipartConfig(maxFileSize = 16177215)
 public class OrderServlet extends HttpServlet {
 
     OrderService orderService;
@@ -83,13 +91,16 @@ public class OrderServlet extends HttpServlet {
 
     private void addOrder(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
-
-        //FileInputStream in = ;
+        
+        InputStream in = null;
+        
+        Part flyerImg = request.getPart("flyerImg");
+        
         int agentID = Integer.parseInt(request.getParameter("agentID"));
         int clientID = Integer.parseInt(request.getParameter("clientID"));
         int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
         String flyerLayout = request.getParameter("flyerLayout");
-        Blob flyerImg = (Blob) request.getPart("flyerImg");
+        in = flyerImg.getInputStream();
         int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
         String paymentInfo = request.getParameter("paymentInfo");
         int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
@@ -97,11 +108,11 @@ public class OrderServlet extends HttpServlet {
         boolean isFlyerArtApproved = Boolean.parseBoolean(request.getParameter("isFlyerArtApproved"));
         boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("isPaymentReceived"));
 
-        int res = orderService.addOrder(agentID, clientID, flyerQty, flyerLayout, flyerImg, personalCopy, paymentInfo,
+        int res = orderService.addOrder(agentID, clientID, flyerQty, flyerLayout, in, personalCopy, paymentInfo,
                 invoiceNum, comments, isFlyerArtApproved, isPaymentReceived, orderDao);
 
         if (res > 0) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("list");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("OrderAdd.jsp");
             dispatcher.forward(request, response);
         } else {
             response.sendRedirect("SiteError.jsp");
@@ -150,7 +161,7 @@ public class OrderServlet extends HttpServlet {
         int clientID = Integer.parseInt(request.getParameter("clientID"));
         int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
         String flyerLayout = request.getParameter("flyerLayout");
-        Blob flyerImg = (Blob) in.getChannel();
+        InputStream flyerImg = (Blob) in.getChannel();
         int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
         String paymentInfo = request.getParameter("paymentInfo");
         int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
@@ -162,14 +173,14 @@ public class OrderServlet extends HttpServlet {
 
         try {
             orderService.updateOrder(orderObj, orderDao);
+            response.sendRedirect("OrderIndex.jsp");
         } catch (SQLException ex) {
             request.setAttribute("Error", ex);
             RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
             rd.forward(request, response);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderIndex.jsp");
-        dispatcher.forward(request, response);
+        
     }
 
     private void deleteOrder(HttpServletRequest request, HttpServletResponse response)

@@ -1,5 +1,6 @@
 package model;
 
+import java.io.InputStream;
 import java.sql.Blob;
 
 /**
@@ -13,7 +14,7 @@ public class Order {
     int clientID;
     int flyerQty;
     String flyerLayout; //portrait, landscape, or both
-    Blob flyerImg;
+    InputStream flyerImg;
     int personalCopy;//copies requested by the client to keep for themselves
     String paymentInfo; //I think this might be just card number but im not sure
     int invoiceNum;
@@ -29,7 +30,7 @@ public class Order {
         this.ID = ID;
     }
 
-    public Order(int ID, int agentID, int clientID, int flyerQty, String flyerLayout, Blob flyerImg, int personalCopy, String paymentInfo,
+    public Order(int ID, int agentID, int clientID, int flyerQty, String flyerLayout, InputStream flyerImg, int personalCopy, String paymentInfo,
             int invoiceNum, String comments, boolean isFlyerArtApproved, boolean isPaymentReceived){
         this.ID = ID;
         this.agentID = agentID;
@@ -85,11 +86,11 @@ public class Order {
         this.flyerLayout = flyerLayout;
     }
 
-    public Blob getFlyerImg() {
+    public InputStream getFlyerImg() {
         return flyerImg;
     }
 
-    public void setFlyerImg(Blob flyerImg) {
+    public void setFlyerImg(InputStream flyerImg) {
         this.flyerImg = flyerImg;
     }
 
