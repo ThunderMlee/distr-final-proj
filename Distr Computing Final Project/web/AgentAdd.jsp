@@ -21,51 +21,35 @@
         <link href="CSS/GlobalTables.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <!--<form action="insert" method="POST" name="addAgentForm">
-            <input type="hidden" name="agent" value="add"/>
-            <label>First Name: </label><input type="text" name="Fname"/> <br/>
-            <label>Last Name: </label><input type="text" name="Lname"/> <br/>
-            <label>Phone Number: </label><input type="text" name="phone"/> <br/>
-            <label>Email: </label><input type="email" name="email"/> <br/>
-            <label>Username: </label><input type="text" name="Uname"/> <br/>
-            <label>Password: </label><input type="password" name="pass"/> <br/>
-            <label>Re-enter password: </label><input type="password" name="conf"/> <br/>
-            <input type="submit" name="submit" value="Create"/> <br/>
-        </form>-->
         <form action="${pageContext.request.contextPath}/AgentServlet" method="POST" name="addAgentForm">
             <input type="hidden" name="agent" value="add"/>
             <table>
                 <tr>
                     <td>First Name:</td>
-                    <td><input type="text" name="id" /></td>
+                    <td><input type="text" name="fName" /></td>
                 </tr>
                 <tr>
                     <td>Last Name:</td>
-                    <td><input type="text" name="agentId" /></td>
+                    <td><input type="text" name="lName" /></td>
                 </tr>
-                <tr>
-                    <td>First Name:</td>
-                    <td><input type="text" name="firstName" /></td>
-                </tr>
-                <tr>
                     <td>Phone Number:</td>
-                    <td><input type="text" name="lastName" /></td>
+                    <td><input type="number" name="phone" /></td>
                 </tr>
                 <tr>
                     <td>Email:</td>
-                    <td><input type="text" name="streetNumber" /></td>
+                    <td><input type="text" name="email" /></td>
                 </tr>
                 <tr>
                     <td>Username:</td>
-                    <td><input type="text" name="streetName" /></td>
+                    <td><input type="text" name="uName" /></td>
                 </tr>
                 <tr>
                     <td>Password:</td>
-                    <td><input type="password" name="city" /></td>
+                    <td><input type="password" name="pass" /></td>
                 </tr>
                 <tr>
                     <td>Re-enter password:</td>
-                    <td><input type="password" name="province" /></td>
+                    <td><input type="password" name="conf" /></td>
                 </tr>
                 
                 <tr>

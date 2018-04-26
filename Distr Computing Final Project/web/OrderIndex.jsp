@@ -80,11 +80,11 @@
                                 <td><c:out value="${order.isFlyerArtApproved}"/></td>
                                 <td><c:out value="${order.isPaymentReceived}"/></td>
                                 <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                                    <td><a href="edit?id=<c:out value='${order.ID}'/>">
+                                    <td><a href="${pageContext.request.contextPath}/OrderEdit.jsp?id=${order.ID}">
                                             Edit
                                         </a>
                                         &nbsp;&nbsp;
-                                        <a href="delete?id=<c:out value='${order.ID}'/>">
+                                        <a href="${pageContext.request.contextPath}/OrderServlet?id=${order.ID}&amp;order=delete">
                                             Delete
                                         </a>
                                     </td>
