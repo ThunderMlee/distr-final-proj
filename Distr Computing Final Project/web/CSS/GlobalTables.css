@@ -42,13 +42,14 @@ tr td:hover{
 
 .btnAdd{
     border: none;
-    color: white;
+    color: black;
     border-radius: 20px;
     transition: background 0.1s linear;
-    background-color: graytext;
+    background-color: lightgray;
 }
 
 .btnAdd:hover{
+    color: white;
     cursor: pointer;
     transition: background 0.25s linear;
     background-color: rgb(50, 50, 50);

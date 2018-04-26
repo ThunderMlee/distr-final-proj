@@ -1,0 +1,15 @@
+#bgPage{
+    background-image: url("images/back2.png");
+    height: 110%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    filter: blur(2px);
+
+    position: fixed;
+    left: -20px;
+    right: -20px;
+    top: -20px;
+    z-index: -1;
+}

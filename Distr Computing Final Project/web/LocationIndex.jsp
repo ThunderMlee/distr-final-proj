@@ -27,6 +27,7 @@
         <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
         <link href="CSS/GlobalTables.css" rel="stylesheet" type="text/css"/>
         <link href="CSS/GlobalNav.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalSiteBack.css" rel="stylesheet" type="text/css"/>
         <script type="text/javascript">
             function editRecord(id) {
                 url = "LocationEdit.jsp";
@@ -39,6 +40,7 @@
         </script>
     </head>
     <body>
+        <div id="bgPage"></div>
         <div id="wrapper">
             <div id="title">
                 <h1>List of Locations</h1>

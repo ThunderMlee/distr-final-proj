@@ -27,8 +27,12 @@
         <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
         <link href="CSS/GlobalTables.css" rel="stylesheet" type="text/css"/>
         <link href="CSS/GlobalNav.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalAdd.css" rel="stylesheet" type="text/css"/>
+        <link href="CSS/GlobalSiteBack.css" rel="stylesheet" type="text/css"/>
+        <script src="JS/GlobalAddCloseJS.js" type="text/javascript"></script>
     </head>
     <body>
+        <div id="bgPage"></div>
         <div id="wrapper">
             <div id="title">
                 <h1>List of Agents</h1>
@@ -68,6 +72,7 @@
                                 <td><c:out value="${agent.phoneNo}"/></td>
                                 <td><c:out value="${agent.email}"/></td>
                                 <c:if test="${sessionScope.ROLE == 'ADMIN'}">
+
                                     <td><a href="${pageContext.request.contextPath}/AgentEdit.jsp?id=${agent.ID}">
                                             Edit
                                         </a>
@@ -81,9 +86,24 @@
                         </c:forEach>
                     </tbody>
                 </table>
-                <input type="button" onclick="location.href='LocationAdd.jsp'" value="Add New Location" class="btnAdd"/>
-                <input type="button" onclick="location.href='AgentAdd.jsp'" value="Add New Marketing Agent" class="btnAdd"/>
+                <input type="button" onclick="location.href = 'LocationAdd.jsp'" value="Add New Location" class="btnAdd"/>
+                <input type="button" onclick="location.href = 'AgentAdd.jsp'" value="Add New Marketing Agent" class="btnAdd"/>
             </center>
+
+            <div class="addForm" id="add">
+                <form class="content animate" action="">
+                    <p>Hello!</p>
+                </form>
+            </div>
+
+            <div class="addForm" id="edit">
+                <form class="content animate" action="">
+                    <input type="text" value="${agent.fName}"/>
+                </form>
+            </div>
+
+            <button onclick="document.getElementById('add').style.display = 'block'" style="width:auto;">Add New Marketing Agent</button>
+
             <div id="foot"><p>Distribution Assignment</p></div>
         </div>
     </body>
