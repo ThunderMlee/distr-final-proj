@@ -41,6 +41,7 @@
                     <a href="ClientIndex.jsp">Clients</a>
                     <a href="OrderIndex.jsp" class="active">Orders</a>
                     <a href="SiteError.jsp">Error</a>
+                    <a href="${pageContext.request.contextPath}/LoginServlet?log=logout">Logout</a>
                 </div>
             </div>
             <center>
@@ -60,44 +61,40 @@
                     <th>Comments</th>
                     <th>Is flyer art approved</th>
                     <th>Is payment received</th>
-                        <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                        <th>Action</th>
-                        </c:if>
+                    <th>Action</th>
+
                     </thead>
                     <tbody>
                         <c:forEach var="order" items="${orderList}">
                             <tr>
                                 <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                                    <td><c:out value="${order.ID}"/></td>
-                                    <td><c:out value="${order.agentID}"/></td>
-                                    <td><c:out value="${order.clientID}"/></td>
+                                <td><c:out value="${order.ID}"/></td>
+                                <td><c:out value="${order.agentID}"/></td>
+                                <td><c:out value="${order.clientID}"/></td>
                                 </c:if>
                                 <td><c:out value="${order.flyerQty}"/></td>
                                 <td><c:out value="${order.flyerLayout}"/></td>
-                                <td><c:out value="${order.flyerImg}"/></td>
+                                <td><img id="dispImg" src="<c:out value="${order.flyerImgBase64}"/>" alt="Flyer Image"/></td>
                                 <td><c:out value="${order.personalCopy}"/></td>
                                 <td><c:out value="${order.paymentInfo}"/></td>
                                 <td><c:out value="${order.invoiceNum}"/></td>
                                 <td><c:out value="${order.comments}"/></td>
                                 <td><c:out value="${order.isFlyerArtApproved}"/></td>
                                 <td><c:out value="${order.isPaymentReceived}"/></td>
-                                <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                                    <td><a href="${pageContext.request.contextPath}/OrderEdit.jsp?id=${order.ID}">
-                                            Edit
-                                        </a>
-                                        &nbsp;&nbsp;
-                                        <a href="${pageContext.request.contextPath}/OrderServlet?id=${order.ID}&amp;order=delete">
-                                            Delete
-                                        </a>
-                                    </td>
-                                </c:if>
+                                <td><a href="${pageContext.request.contextPath}/OrderEdit.jsp?id=${order.ID}">
+                                        Edit
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a href="${pageContext.request.contextPath}/OrderServlet?id=${order.ID}&amp;order=delete">
+                                        Delete
+                                    </a>
+                                </td>
+
                             </tr>
                         </c:forEach>
-
-
                     </tbody>
                 </table>
-                <input type="submit" onclick="location.href='OrderAdd.jsp'" value="Add New Order" class="btnAdd"/>
+                <input type="submit" onclick="location.href = 'OrderAdd.jsp'" value="Add New Order" class="btnAdd"/>
             </center>
             <div id="foot"><p>Distribution Assignment</p></div>
         </div>

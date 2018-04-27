@@ -51,6 +51,7 @@
                     <a href="ClientIndex.jsp">Clients</a>
                     <a href="OrderIndex.jsp">Orders</a>
                     <a href="SiteError.jsp">Error</a>
+                    <a href="${pageContext.request.contextPath}/LoginServlet?log=logout">Logout</a>
                 </div>
             </div>
             <center>

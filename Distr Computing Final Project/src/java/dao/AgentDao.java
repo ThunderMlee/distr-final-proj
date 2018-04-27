@@ -76,7 +76,7 @@ public class AgentDao {
                 stmt = conn.prepareStatement(sqlLogin);
                 stmt.setString(1, agentObj.getuName());
                 stmt.setString(2, agentObj.getPass());
-                stmt.setString(3, "market");
+                stmt.setString(3, "USER");
                 stmt.setInt(4, testing);
                 res = stmt.executeUpdate();
 
@@ -169,7 +169,7 @@ public class AgentDao {
         String sql = "UPDATE marketingagent SET firstName = ?, lastName = ?, phoneNo = ?, email = ?";
         sql += "WHERE id = ?";
 
-        String sql2 = "UPDATE login SET userName = ?, password = ?";
+        String sql2 = "UPDATE login SET userName = ?, password = ? ";
         sql2 += "WHERE agentId = ?";
 
         Connection con = getConnection();

@@ -11,6 +11,13 @@
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
+<c:if test="${requestScope.client == null}">
+    <c:redirect url="/ClientServlet">
+        <c:param name="client" value="edit"/>
+        <c:param name="id" value="${param.id}"/>
+    </c:redirect>
+</c:if> 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,13 +28,19 @@
     <body>
         <form action="ClientServlet" method="POST" name="editClientForm">
             
-            <input type="hidden" name="client" value="add"/>
-            <input type="hidden" name="id" value="${client.Id}"/>
+            <input type="hidden" name="client" value="update"/>
+            <input type="hidden" name="id" value="${client.id}"/>
             
             <table>
                 <tr>
-                    <td>Agent ID:</td>
-                    <td><input type="text" name="agentId" value="${client.agentId}"/></td>
+                    <td>Agent:</td>
+                    <td>
+                        <select name="agentId">
+                            <c:forEach var="agent" items="${agentList}">
+                                <option value="${agent.ID}" <c:if test="${agent.ID == client.agentId}"><c:out value='Selected'/></c:if>><c:out value="${agent.fName} ${agent.lName}"/></option>
+                            </c:forEach>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>First Name:</td>
@@ -79,7 +92,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="Submit" name="submit" value="Create" />
+                        <input type="Submit" name="submit" value="Save" />
                     </td>
                 </tr>
             </table>

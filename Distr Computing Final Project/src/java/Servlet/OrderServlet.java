@@ -1,18 +1,17 @@
 package Servlet;
 
+import Services.AgentService;
+import Services.ClientService;
 import Services.OrderService;
+import dao.AgentDao;
+import dao.ClientDao;
 import dao.OrderDao;
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
-import java.nio.file.Paths;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -20,7 +19,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import model.Agent;
+import model.Client;
+import model.Location;
 import model.Order;
+import sun.misc.IOUtils;
 
 /**
  *
@@ -57,12 +60,15 @@ public class OrderServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
 
         String action = request.getParameter("order");
         try {
             switch (action) {
+                case "get":
+                    getLists(request, response);
+                    break;
                 case "add":
                     addOrder(request, response);
                     break;
@@ -84,40 +90,58 @@ public class OrderServlet extends HttpServlet {
             }
         } catch (NullPointerException ex) {
             ex.printStackTrace();
-            
         }
 
     }
 
+    private void getLists(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException{
+        request.setAttribute("agentList", getAgentList());
+        request.setAttribute("clientList", getClientList());
+        request.setAttribute("locList", getLocationList());
+        request.setAttribute("invoiceNum", orderDao.getInvoiceNum());
+        RequestDispatcher rd = request.getRequestDispatcher("OrderAdd.jsp");
+        rd.forward(request, response);
+    }
+    
     private void addOrder(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, NullPointerException {
+            throws ServletException, IOException, NullPointerException, SQLException {
         
         InputStream in = null;
         
-        Part flyerImg = request.getPart("flyerImg");
+        Part image = request.getPart("flyerImg");
+        in = image.getInputStream();
         
         int agentID = Integer.parseInt(request.getParameter("agentID"));
         int clientID = Integer.parseInt(request.getParameter("clientID"));
         int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
         String flyerLayout = request.getParameter("flyerLayout");
-        in = flyerImg.getInputStream();
+        byte[] flyerImg = IOUtils.readFully(in, (int) image.getSize(), true);
         int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
-        String paymentInfo = request.getParameter("paymentInfo");
+        
+        
+        String[] locations = request.getParameterValues("location");
+        int[] location = new int[locations.length];
+        
+        for( int i = 0 ; i < location.length ; i++ ){
+            location[i] = Integer.parseInt(locations[i]);
+        }
+        
+        
+        String paymentInfo = request.getParameter("paymentInfoNum") + " " + request.getParameter("paymentInfoDtMM") + " "
+                + request.getParameter("paymentInfoDtYY") + " " + request.getParameter("paymentInfoCVV");
         int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
         String comments = request.getParameter("comments");
-        boolean isFlyerArtApproved = Boolean.parseBoolean(request.getParameter("isFlyerArtApproved"));
-        boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("isPaymentReceived"));
+        boolean isFlyerArtApproved = false;
+        boolean isPaymentReceived = false;
 
-        int res = orderService.addOrder(agentID, clientID, flyerQty, flyerLayout, in, personalCopy, paymentInfo,
+        int res = orderService.addOrder(agentID, clientID, flyerQty, flyerLayout, flyerImg, location, personalCopy, paymentInfo,
                 invoiceNum, comments, isFlyerArtApproved, isPaymentReceived, orderDao);
 
         if (res > 0) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("OrderAdd.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect("OrderIndex.jsp");
         } else {
             response.sendRedirect("SiteError.jsp");
         }
-
     }
 
     private void viewListOrder(HttpServletRequest request, HttpServletResponse response)
@@ -139,7 +163,18 @@ public class OrderServlet extends HttpServlet {
         try {
             Order order = orderService.showOrder(ID, orderDao);
             request.setAttribute("order", order);
+            
+            String[] payInfo = order.getPaymentInfo().split(" ");
 
+            request.setAttribute("number", payInfo[0]);
+            request.setAttribute("expMM", payInfo[1]);
+            request.setAttribute("expYY", payInfo[2]);
+            request.setAttribute("CVV", payInfo[3]);
+            
+            request.setAttribute("agentList",getAgentList());
+            request.setAttribute("clientList",getClientList());
+            request.setAttribute("locationList",getLocationList());
+            
             RequestDispatcher dispatcher = request.getRequestDispatcher("OrderEdit.jsp");
             dispatcher.forward(request, response);
 
@@ -154,33 +189,49 @@ public class OrderServlet extends HttpServlet {
     private void updateOrder(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        FileInputStream in = new FileInputStream(request.getParameter("flyerImg"));
-
+        InputStream in = null;
+        
+        Part image = request.getPart("flyerImg");
+        in = image.getInputStream();
+        
         int ID = Integer.parseInt(request.getParameter("ID"));
         int agentID = Integer.parseInt(request.getParameter("agentID"));
         int clientID = Integer.parseInt(request.getParameter("clientID"));
         int flyerQty = Integer.parseInt(request.getParameter("flyerQty"));
         String flyerLayout = request.getParameter("flyerLayout");
-        InputStream flyerImg = (Blob) in.getChannel();
+        byte[] flyerImg;
+        
+        if(in.available() != 0){
+            flyerImg = IOUtils.readFully(in, (int) image.getSize(), true);
+        } else {
+            flyerImg = getImage(ID);
+        }
+        
+        String[] locations = request.getParameter("location").split("");
+        int[] location = new int[locations.length];
+        
+        for( int i = 0 ; i < location.length ; i++ ){
+            location[i] = Integer.parseInt(locations[i]);
+        }
+        
         int personalCopy = Integer.parseInt(request.getParameter("personalCopy"));
         String paymentInfo = request.getParameter("paymentInfo");
         int invoiceNum = Integer.parseInt(request.getParameter("invoiceNum"));
         String comments = request.getParameter("comments");
-        boolean isFlyerArtApproved = Boolean.parseBoolean(request.getParameter("isFlyerArtApproved"));
-        boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("isPaymentReceived"));
+        boolean isFlyerArtApproved = Boolean.parseBoolean(request.getParameter("artApprove"));
+        boolean isPaymentReceived = Boolean.parseBoolean(request.getParameter("payReceive"));
 
-        Order orderObj = new Order(ID, agentID, clientID, flyerQty, flyerLayout, flyerImg, personalCopy, paymentInfo, invoiceNum, comments, isFlyerArtApproved, isPaymentReceived);
+        Order orderObj = new Order(ID, agentID, clientID, flyerQty, flyerLayout, flyerImg, location, personalCopy, paymentInfo, invoiceNum, comments, isFlyerArtApproved, isPaymentReceived);
 
         try {
             orderService.updateOrder(orderObj, orderDao);
             response.sendRedirect("OrderIndex.jsp");
         } catch (SQLException ex) {
+            ex.printStackTrace();
             request.setAttribute("Error", ex);
             RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
             rd.forward(request, response);
         }
-
-        
     }
 
     private void deleteOrder(HttpServletRequest request, HttpServletResponse response)
@@ -191,14 +242,55 @@ public class OrderServlet extends HttpServlet {
 
         try {
             orderService.deleteOrder(orderObj, orderDao);
+            response.sendRedirect("OrderIndex.jsp");
         } catch (SQLException ex) {
             request.setAttribute("Error", ex);
             RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
             rd.forward(request, response);
         }
+    }
+    
+    private ArrayList<Client> getClientList() throws ServletException, IOException, SQLException{
+        ArrayList<Client> clientList = new ArrayList();
+        ClientService cService = new ClientService();
+        ClientDao cDao = new ClientDao(jdbcURL, jdbcUserName, jdbcPassword);
+        
+        clientList = cService.viewClient(cDao);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("OrderIndex.jsp");
-        dispatcher.forward(request, response);
+        return clientList;
+    }
+    
+    public ArrayList<Agent> getAgentList(){
+        ArrayList<Agent> agentList = new ArrayList();
+        AgentService aService = new AgentService();
+        AgentDao aDao = new AgentDao(jdbcURL, jdbcUserName, jdbcPassword);
+        
+        agentList = aService.viewAgent(aDao);
+        
+        return agentList;
+    }
+    
+    public ArrayList<Location> getLocationList() throws SQLException{
+        ArrayList<Location> locationList = new ArrayList();
+        LocationServlet loc = new LocationServlet();
+        
+        locationList = loc.getList();
+        
+        return locationList;
+    }
+    
+    private byte[] getImage(int ID){
+        Order orderObj = new Order(ID);
+        
+        byte[] img = null;
+        
+        try {
+            img = orderService.getImage(orderObj, orderDao);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return img;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -227,7 +319,11 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

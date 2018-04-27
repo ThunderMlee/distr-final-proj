@@ -15,7 +15,7 @@
 
 <c:if test="${requestScope.EditData == null}">
     <c:redirect url="/LocationServlet">
-        <c:param name="location" value="edit"/>
+        <c:param name="location" value="update"/>
         <c:param name="id" value="${param.id}"/>
     </c:redirect>
 </c:if> 
@@ -35,10 +35,7 @@
             <table border="1px" width="80%">
                 <%List res = (List) request.getAttribute("EditData");%>
                 <%if (res.isEmpty() != true) {%>
-                <tr>
-                    <td>ID</td>
-                    <td><input readonly type="text" name="id" value='<%=res.get(0)%>'/></td>
-                </tr>
+                <input type="hidden" name="id" value='<%=res.get(0)%>'/>
                 <tr>
                     <td>location Name</td>
                     <td><input type ="text" name="locationName" value='<%=res.get(1)%>'/></td>

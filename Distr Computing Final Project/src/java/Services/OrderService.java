@@ -1,8 +1,6 @@
 package Services;
 
 import dao.OrderDao;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.Order;
@@ -13,11 +11,11 @@ import model.Order;
  */
 public class OrderService {
     
-    public int addOrder(int agentID, int clientID, int flyerQty, String flyerLayout, InputStream flyerImg, int personalCopy, String paymentInfo,
+    public int addOrder(int agentID, int clientID, int flyerQty, String flyerLayout, byte[] flyerImg, int[] location, int personalCopy, String paymentInfo,
             int invoiceNum, String comments, boolean isFlyerArtApproved, boolean isPaymentReceived, OrderDao dao) {
         int res = 0;
         Order orderObj = new Order();
-        if (agentID != 0 && clientID != 0 && flyerQty != 0 && flyerLayout != null && flyerImg != null && personalCopy != 0 && paymentInfo != null && invoiceNum != 0 && 
+        if (agentID != 0 && clientID != 0 && flyerQty != 0 && flyerLayout != null && flyerImg != null && personalCopy != 0 && paymentInfo != null && 
                 comments != null) {
             orderObj.setAgentID(agentID);
             orderObj.setClientID(clientID);
@@ -25,6 +23,7 @@ public class OrderService {
             orderObj.setFlyerLayout(flyerLayout);
             orderObj.setFlyerImg(flyerImg);
             orderObj.setPersonalCopy(personalCopy);
+            orderObj.setLocation(location);
             orderObj.setPaymentInfo(paymentInfo);
             orderObj.setInvoiceNum(invoiceNum);
             orderObj.setComments(comments);
@@ -60,5 +59,10 @@ public class OrderService {
         boolean res = dao.deleteOrder(orderObj);
         
         return res;
+    }
+    
+    public byte[] getImage(Order orderObj, OrderDao dao) throws SQLException{ 
+       
+        return dao.getImage(orderObj);
     }
 }

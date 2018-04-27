@@ -12,27 +12,64 @@
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
+<c:if test="${requestScope.order == null}">
+    <c:redirect url="/OrderServlet">
+        <c:param name="order" value="edit"/>
+        <c:param name="id" value="${param.id}"/>
+    </c:redirect>
+</c:if> 
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Edit order</title>
         <link href="CSS/GlobalFont.css" rel="stylesheet" type="text/css"/>
+        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#dispImg')
+                                .attr('src', e.target.result)
+                                .width(150)
+                                .height(200);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+        </script>
     </head>
     <body>
         <form action="OrderServlet" enctype="multipart/form-data" method="POST" name="orderEditForm">
             
-            <input type="hidden" name="id" value="${order.ID}"/>
-            <input type="hidden" name="order" value="edit"/>
+            <input type="hidden" name="ID" value="${order.ID}"/>
+            <input type="hidden" name="order" value="update"/>
             
             <table>
                 <tr>
                     <td>Agent ID</td>
-                    <td><input type="text" name="locationName" value="${order.agentID}"/></td>
+                    <td>
+                        <select name="agentID">
+                            <c:forEach var="agent" items="${agentList}">
+                                <option value="${agent.ID}" <c:if test="${agent.ID == order.agentID}"><c:out value='Selected'/></c:if>><c:out value="${agent.fName} ${agent.lName}"/></option>
+                            </c:forEach>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>Client ID</td>
-                    <td><input type="text" name="distributionCapacity" value="${order.clientID}" /></td>
+                    <td>
+                        <select name="clientID">
+                            <c:forEach var="client" items="${clientList}">
+                                <option value="${client.id}" <c:if test="${client.ID == order.clientID}"><c:out value='Selected'/></c:if>><c:out value="${client.firstName} ${client.lastName}"/></option>
+                            </c:forEach>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>Flyer Quantity</td>
@@ -40,15 +77,39 @@
                 </tr>
                 <tr>
                     <td>Flyer Layout</td>
-                    <td><input type="text" name="flyerLayout" value="${order.flyerLayout}" /></td>
+                    <td>
+                        <select name="flyerLayout">
+                            <option value="landscape" <c:if test="${order.flyerLayout == 'landscape'}"><c:out value="selected"/></c:if>>Landscape</option>
+                            <option value="portrait" <c:if test="${order.flyerLayout == 'portrait'}"><c:out value="selected"/></c:if>>Portrait</option>
+                            <option value="both" <c:if test="${order.flyerLayout == 'both'}"><c:out value="selected"/></c:if>>Both</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>Flyer Image</td>
-                    <td><input type="file" name="flyerImg"/></td>
+                    <td><img id="dispImg" src="<c:out value="${order.flyerImgBase64}"/>" alt="Flyer Image"/><input type="file" name="flyerImg" onchange="readURL(this);"/></td>
                 </tr>
                 <tr>
                     <td>Personal Copy</td>
                     <td><input type="text" name="personalCopy" value="${order.personalCopy}"/></td>
+                </tr>
+                <tr>
+                    <td>Location</td>
+                    <td>
+                        <select name="location" multiple>
+                            <c:forEach var="location" items="${locList}">
+                                <option value="${location.ID}" <c:if test="${locList == order.location}"><c:out value='Selected'/></c:if>><c:out value="${location.name}"/></option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Payment Info</td>
+                    <td>
+                        <label>Credit card number</label><input type="text" name="paymentInfoNum" value="${number}"/>
+                        <label>Expiry date(MM/YY)</label><input type="text" name="paymentInfoDtMM" value="${expMM}"/><input type="text" name="paymentInfoDtYY" value="${expYY}"/>
+                        <label>CVV</label><input type="text" name="paymentInfoCVV" value="${CVV}"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>Invoice Number</td>
@@ -60,11 +121,21 @@
                 </tr>
                 <tr>
                     <td>Is flyer art approved?</td>
-                    <td><input type="radio" name="artApprove" <c:if test="${order.isFlyerArtApproved == true}">checked</c:if>/><input type="radio" name="artApprove" <c:if test="${order.IsArtApproved == false}">checked</c:if>/></td>
+                    <td>
+                        <br/>
+                        <label>Yes</label><input type="radio" value="true" name="artApprove" <c:if test="${order.isFlyerArtApproved == true}"><c:out value="checked"/></c:if>/> <br/>
+                        <label>No</label><input type="radio" value="false" name="artApprove" <c:if test="${order.isFlyerArtApproved == false}"><c:out value="checked"/></c:if>/> <br/>
+                        <br/>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Is payment received?</td>
-                    <td><input type="radio" name="payReceive" <c:if test="${order.isPaymentReceived == true}">checked</c:if>/><input type="radio" name="payReceive" <c:if test="${order.IsArtApproved == false}">checked</c:if>/></td>
+                    <td>Has payment received?</td>
+                    <td>
+                        <br/>
+                        <label>Yes</label><input type="radio" value="true" name="payReceive" <c:if test="${order.isPaymentReceived == true}"><c:out value="checked"/></c:if>/> <br/>
+                        <label>No</label><input type="radio" value="false" name="payReceive" <c:if test="${order.isPaymentReceived == false}"><c:out value="checked"/></c:if>/> <br/>
+                        <br/>
+                    </td>
                 </tr>
                 <tr>
                     <td></td>
