@@ -16,6 +16,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Location;
 
 /**
  *
@@ -139,7 +140,7 @@ public class LocationServlet extends HttpServlet {
             dbconn = new DatabaseConnection();
             conn = dbconn.setConnection();
             query = "SELECT * FROM location "
-                + "WHERE id = " + id;
+                    + "WHERE id = " + id;
             stmt = conn.createStatement();
 
             res = dbconn.getResult(query, conn);
@@ -148,7 +149,7 @@ public class LocationServlet extends HttpServlet {
                 lst.add(res.getString("locationName"));
                 lst.add(res.getString("distributionCapacity"));
             }
-            
+
             res.close();
         } catch (SQLException ex) {
             request.setAttribute("Error", ex);
@@ -176,11 +177,6 @@ public class LocationServlet extends HttpServlet {
             conn = dbconn.setConnection();
             stmt = conn.createStatement();
 
-            /*query = "update location set locationName = '"+locationName+"',distributionCapacity = '"+distributionCapacity+"' where id = "+id+"'";
-            query = "UPDATE location SET locationName = "
-                  + "(locationName, distributionCapacity)"
-                + "values('"+locationName+"',"+distributionCapacity+")"
-              + "WHERE id = " + id;*/
             query = "UPDATE location set locationName='" + locationName + "',distributionCapacity='" + distributionCapacity + "' WHERE id=" + id;
 
             stmt.executeUpdate(query);
@@ -200,7 +196,7 @@ public class LocationServlet extends HttpServlet {
             conn = dbconn.setConnection();
             stmt = conn.createStatement();
             id = request.getParameter("id");
-            query = "DELETE from location WHERE id = '" + id + "'";
+            query = "DELETE from location WHERE id = " + id;
             stmt.executeUpdate(query);
 
         } catch (SQLException ex) {
@@ -209,6 +205,45 @@ public class LocationServlet extends HttpServlet {
             response.sendRedirect("LocationIndex.jsp");
             out.close();
         }
+    }
+
+    protected ArrayList<Location> getList() throws SQLException {
+        ArrayList<Location> locationList = new ArrayList();
+
+        try {
+            dbconn = new DatabaseConnection();
+            conn = dbconn.setConnection();
+            stmt = conn.createStatement();
+            query = "SELECT * FROM location";
+            res = dbconn.getResult(query, conn);
+
+            int id = 0;
+            String locName = "";
+            int distrCapacity = 0;
+
+            while (res.next()) {
+                id = res.getInt("id");
+                locName = res.getString("locationName");
+                distrCapacity = res.getInt("distributionCapacity");
+
+                Location locationObj = new Location();
+
+                locationObj.setID(id);
+                locationObj.setName(locName);
+                locationObj.setCapacity(distrCapacity);
+                
+                locationList.add(locationObj);
+            }
+            res.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            conn.close();
+            lst.clear();
+            out.close();
+        }
+        
+        return locationList;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

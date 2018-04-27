@@ -1,16 +1,22 @@
 package Servlet;
 
+import Services.AgentService;
 import Services.ClientService;
+import dao.AgentDao;
 import dao.ClientDao;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Agent;
 import model.Client;
+import model.Location;
 
 /**
  *
@@ -36,7 +42,7 @@ public class ClientServlet extends HttpServlet {
         clientDao = new ClientDao(jdbcURL, jdbcUserName, jdbcPassword);
         clientService = new ClientService();
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,11 +54,14 @@ public class ClientServlet extends HttpServlet {
      */
     //Redirect request to appropriate method
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
+            throws ServletException, IOException, SQLException {
+
         String action = request.getParameter("client");
-        
-        switch(action){
+
+        switch (action) {
+            case "getList":
+                getList(request, response);
+                break;
             case "add":
                 addClient(request, response);
                 break;
@@ -63,7 +72,7 @@ public class ClientServlet extends HttpServlet {
                 editClient(request, response);
                 break;
             case "update":
-                updateClient(request,response);
+                updateClient(request, response);
                 break;
             case "delete":
                 deleteClient(request, response);
@@ -72,6 +81,14 @@ public class ClientServlet extends HttpServlet {
                 response.sendRedirect("SiteHome.jsp");
                 break;
         }
+    }
+
+    private void getList(HttpServletRequest request, HttpServletResponse response) 
+            throws SQLException, ServletException, IOException {
+        request.setAttribute("agentList", getAgentList());
+
+        RequestDispatcher rd = request.getRequestDispatcher("ClientAdd.jsp");
+        rd.forward(request, response);
     }
 
     //Insert new client
@@ -92,23 +109,22 @@ public class ClientServlet extends HttpServlet {
         String company = request.getParameter("company");
         String companyType = request.getParameter("companyType");
 
-        int res = clientService.addClient(agentId, firstName,lastName,streetNumber,streetName,
-                city,province,postalCode,telOffice,telCell,email,company,companyType, clientDao);
+        int res = clientService.addClient(agentId, firstName, lastName, streetNumber, streetName,
+                city, province, postalCode, telOffice, telCell, email, company, companyType, clientDao);
 
         if (res > 0) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("ClientIndex.jsp");
-            dispatcher.forward(request, response);
+            response.sendRedirect("ClientIndex.jsp");
         } else {
             response.sendRedirect("SiteError.jsp");
         }
 
     }
-    
+
     //View all clients
     private void viewListClient(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
-        
-        try{
+
+        try {
             ArrayList<Client> clientList = new ArrayList();
             clientList = clientService.viewClient(clientDao);
 
@@ -116,14 +132,14 @@ public class ClientServlet extends HttpServlet {
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("ClientIndex.jsp");
             dispatcher.forward(request, response);
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             request.setAttribute("Error", ex);
             RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
             rd.forward(request, response);
         }
-        
+
     }
-    
+
     private void editClient(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int ID = Integer.parseInt(request.getParameter("id"));
@@ -131,6 +147,7 @@ public class ClientServlet extends HttpServlet {
         try {
             Client client = clientService.showClient(ID, clientDao);
             request.setAttribute("client", client);
+            request.setAttribute("agentList", getAgentList());
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("ClientEdit.jsp");
             dispatcher.forward(request, response);
@@ -146,7 +163,7 @@ public class ClientServlet extends HttpServlet {
     private void updateClient(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        int Id = Integer.parseInt(request.getParameter("Id"));
+        int Id = Integer.parseInt(request.getParameter("id"));
         int agentId = Integer.parseInt(request.getParameter("agentId"));
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
@@ -161,9 +178,9 @@ public class ClientServlet extends HttpServlet {
         String company = request.getParameter("company");
         String companyType = request.getParameter("companyType");
 
-        Client clientObj = new Client(Id ,agentId, firstName,lastName,streetNumber,streetName,
-                city,province,postalCode,telOffice,telCell,email,company,companyType);
-        
+        Client clientObj = new Client(Id, agentId, firstName, lastName, streetNumber, streetName,
+                city, province, postalCode, telOffice, telCell, email, company, companyType);
+
         try {
             clientService.updateAgent(clientObj, clientDao);
         } catch (SQLException ex) {
@@ -171,7 +188,7 @@ public class ClientServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("SiteError.jsp");
             rd.forward(request, response);
         }
-        
+
         response.sendRedirect("ClientIndex.jsp");
     }
 
@@ -192,6 +209,16 @@ public class ClientServlet extends HttpServlet {
         response.sendRedirect("ClientIndex.jsp");
     }
 
+    public ArrayList<Agent> getAgentList() {
+        ArrayList<Agent> agentList = new ArrayList();
+        AgentService aService = new AgentService();
+        AgentDao aDao = new AgentDao(jdbcURL, jdbcUserName, jdbcPassword);
+
+        agentList = aService.viewAgent(aDao);
+
+        return agentList;
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -204,7 +231,11 @@ public class ClientServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -218,7 +249,11 @@ public class ClientServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

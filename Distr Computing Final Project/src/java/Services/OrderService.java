@@ -11,11 +11,11 @@ import model.Order;
  */
 public class OrderService {
     
-    public int addOrder(int agentID, int clientID, int flyerQty, String flyerLayout, byte[] flyerImg, int personalCopy, String paymentInfo,
+    public int addOrder(int agentID, int clientID, int flyerQty, String flyerLayout, byte[] flyerImg, int[] location, int personalCopy, String paymentInfo,
             int invoiceNum, String comments, boolean isFlyerArtApproved, boolean isPaymentReceived, OrderDao dao) {
         int res = 0;
         Order orderObj = new Order();
-        if (agentID != 0 && clientID != 0 && flyerQty != 0 && flyerLayout != null && flyerImg != null && personalCopy != 0 && paymentInfo != null && invoiceNum != 0 && 
+        if (agentID != 0 && clientID != 0 && flyerQty != 0 && flyerLayout != null && flyerImg != null && personalCopy != 0 && paymentInfo != null && 
                 comments != null) {
             orderObj.setAgentID(agentID);
             orderObj.setClientID(clientID);
@@ -23,6 +23,7 @@ public class OrderService {
             orderObj.setFlyerLayout(flyerLayout);
             orderObj.setFlyerImg(flyerImg);
             orderObj.setPersonalCopy(personalCopy);
+            orderObj.setLocation(location);
             orderObj.setPaymentInfo(paymentInfo);
             orderObj.setInvoiceNum(invoiceNum);
             orderObj.setComments(comments);

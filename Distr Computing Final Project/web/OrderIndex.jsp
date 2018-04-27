@@ -68,9 +68,9 @@
                         <c:forEach var="order" items="${orderList}">
                             <tr>
                                 <c:if test="${sessionScope.ROLE == 'ADMIN'}">
-                                    <td><c:out value="${order.ID}"/></td>
-                                    <td><c:out value="${order.agentID}"/></td>
-                                    <td><c:out value="${order.clientID}"/></td>
+                                <td><c:out value="${order.ID}"/></td>
+                                <td><c:out value="${order.agentID}"/></td>
+                                <td><c:out value="${order.clientID}"/></td>
                                 </c:if>
                                 <td><c:out value="${order.flyerQty}"/></td>
                                 <td><c:out value="${order.flyerLayout}"/></td>

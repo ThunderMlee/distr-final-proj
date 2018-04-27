@@ -53,11 +53,23 @@
             <table>
                 <tr>
                     <td>Agent ID</td>
-                    <td><input type="text" name="agentID" value="${order.agentID}"/></td>
+                    <td>
+                        <select name="agentID">
+                            <c:forEach var="agent" items="${agentList}">
+                                <option value="${agent.ID}" <c:if test="${agent.ID == order.agentID}"><c:out value='Selected'/></c:if>><c:out value="${agent.fName} ${agent.lName}"/></option>
+                            </c:forEach>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>Client ID</td>
-                    <td><input type="text" name="clientID" value="${order.clientID}" /></td>
+                    <td>
+                        <select name="clientID">
+                            <c:forEach var="client" items="${clientList}">
+                                <option value="${client.id}" <c:if test="${client.ID == order.clientID}"><c:out value='Selected'/></c:if>><c:out value="${client.firstName} ${client.lastName}"/></option>
+                            </c:forEach>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>Flyer Quantity</td>
@@ -82,8 +94,22 @@
                     <td><input type="text" name="personalCopy" value="${order.personalCopy}"/></td>
                 </tr>
                 <tr>
+                    <td>Location</td>
+                    <td>
+                        <select name="location" multiple>
+                            <c:forEach var="location" items="${locList}">
+                                <option value="${location.ID}" <c:if test="${locList == order.location}"><c:out value='Selected'/></c:if>><c:out value="${location.name}"/></option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td>Payment Info</td>
-                    <td><input type="text" name="paymentInfo" value="${order.paymentInfo}"/></td>
+                    <td>
+                        <label>Credit card number</label><input type="text" name="paymentInfoNum" value="${number}"/>
+                        <label>Expiry date(MM/YY)</label><input type="text" name="paymentInfoDtMM" value="${expMM}"/><input type="text" name="paymentInfoDtYY" value="${expYY}"/>
+                        <label>CVV</label><input type="text" name="paymentInfoCVV" value="${CVV}"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>Invoice Number</td>

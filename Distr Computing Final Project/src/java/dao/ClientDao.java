@@ -161,7 +161,7 @@ public class ClientDao {
             while (result.next()) {
                 clientObj = new Client();
 
-                clientObj.setId(result.getInt("id"));
+                clientObj.setId(ID);
                 clientObj.setAgentId(result.getInt("agentId"));
                 clientObj.setFirstName(result.getString("firstName"));
                 clientObj.setLastName(result.getString("lastName"));
@@ -188,9 +188,9 @@ public class ClientDao {
             throws SQLException {
 
         String sql = "UPDATE clients SET agentId = ?, firstName = ?, lastName = ?, streetNumber = ?, streetName = ?, city = ?, province = ?, postalCode = ?, "
-                + "telOffice = ?, telCell = ?, email = ? "
+                + "telOffice = ?, telCell = ?, email = ?, company = ?, companyType = ? "
                 + "WHERE id = ?";
-        boolean res;
+        boolean res = false;
         
         try (Connection con = getConnection(); PreparedStatement statement = con.prepareStatement(sql)) {
             statement.setInt(1, clientObj.getAgentId());
@@ -198,15 +198,19 @@ public class ClientDao {
             statement.setString(3, clientObj.getLastName());
             statement.setInt(4, clientObj.getStreetNumber());
             statement.setString(5, clientObj.getStreetName());
-            statement.setString(1, clientObj.getCity());
-            statement.setString(2, clientObj.getProvince());
-            statement.setString(3, clientObj.getPostalCode());
-            statement.setString(4, clientObj.getTelOffice());
-            statement.setString(5, clientObj.getTelCell());
-            statement.setString(5, clientObj.getEmail());
-            statement.setInt(5, clientObj.getId());
+            statement.setString(6, clientObj.getCity());
+            statement.setString(7, clientObj.getProvince());
+            statement.setString(8, clientObj.getPostalCode());
+            statement.setString(9, clientObj.getTelOffice());
+            statement.setString(10, clientObj.getTelCell());
+            statement.setString(11, clientObj.getEmail());
+            statement.setString(12, clientObj.getCompany());
+            statement.setString(13, clientObj.getCompanyType());
+            statement.setInt(14, clientObj.getId());
             
             res = statement.executeUpdate() > 0;
+        } catch(SQLException ex){
+            ex.printStackTrace();
         }
         
         return res;

@@ -14,7 +14,8 @@ public class Order {
     byte[] flyerImg;
     String flyerImgBase64;
     int personalCopy;//copies requested by the client to keep for themselves
-    String paymentInfo; //I think this might be just card number but im not sure
+    int[] location;
+    String paymentInfo;
     int invoiceNum;
     String comments;
     boolean isFlyerArtApproved;
@@ -28,7 +29,7 @@ public class Order {
         this.ID = ID;
     }
 
-    public Order(int ID, int agentID, int clientID, int flyerQty, String flyerLayout, byte[] flyerImg, int personalCopy, String paymentInfo,
+    public Order(int ID, int agentID, int clientID, int flyerQty, String flyerLayout, byte[] flyerImg, int[] location, int personalCopy, String paymentInfo,
             int invoiceNum, String comments, boolean isFlyerArtApproved, boolean isPaymentReceived){
         this.ID = ID;
         this.agentID = agentID;
@@ -37,6 +38,7 @@ public class Order {
         this.flyerLayout = flyerLayout;
         this.flyerImg = flyerImg;
         this.personalCopy = personalCopy;
+        this.location = location;
         this.paymentInfo = paymentInfo;
         this.invoiceNum = invoiceNum;
         this.comments = comments;
@@ -44,6 +46,14 @@ public class Order {
         this.isPaymentReceived = isPaymentReceived;
     }
 
+    public int[] getLocation() {
+        return location;
+    }
+
+    public void setLocation(int[] location) {
+        this.location = location;
+    }
+    
     public String getFlyerImgBase64() {
         return flyerImgBase64;
     }

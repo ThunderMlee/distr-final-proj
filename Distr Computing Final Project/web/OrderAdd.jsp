@@ -11,6 +11,12 @@
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
+<c:if test="${requestScope.agentList == null || requestScope.clientList == null || requestScope.locList == null}">
+    <c:redirect url="/OrderServlet">
+        <c:param name="order" value="get"/>
+    </c:redirect>
+</c:if> 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -42,18 +48,22 @@
             <table>
                 <tr>
                     <td>Agent</td>
-                    <td><input type="text" name="agentID"/>
-                        <%--<select name="agentID">
-
-                        </select>--%>
+                    <td>
+                        <select name="agentID">
+                            <c:forEach var="agent" items="${agentList}">
+                                <option value="${agent.ID}">${agent.fName} ${agent.lName}</option>
+                            </c:forEach>
+                        </select>
                     </td>
                 </tr>
                 <tr>
                     <td>Client</td>
-                    <td><input type="text" name="clientID"/>
-                        <%--<select name="clientID">
-
-                        </select>--%>
+                    <td>
+                        <select name="clientID">
+                            <c:forEach var="client" items="${clientList}">
+                                <option value="${client.id}">${client.firstName} ${client.lastName}</option>
+                            </c:forEach>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -75,38 +85,34 @@
                     <td><input type="text" name="personalCopy"/></td>
                 </tr>
                 <tr>
+                    <td>Location</td>
+                    <td>
+                        <select name="location" multiple>
+                            <c:forEach var="location" items="${locList}">
+                                <option value="${location.ID}">${location.name}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td>Payment Info</td>
-                    <td><input type="text" name="paymentInfo"/></td>
+                    <td>
+                        <label>Credit card number</label><input type="text" name="paymentInfoNum"/> <br/>
+                        <label>Expiry date(MM/YY)</label><input type="text" name="paymentInfoDtMM"/><input type="text" name="paymentInfoDtYY"/> <br/>
+                        <label>CVV</label><input type="text" name="paymentInfoCVV"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Invoice Number</td>
+                    <td><input type="text" name="invoiceNum" value="${invoiceNum}"/></td>
                 </tr>
                 <tr>
                     <td>Flyer Image</td>
                     <td><img id="dispImg" src="#" alt="Flyer Image"/><input type="file" name="flyerImg" onchange="readURL(this);"/></td>
                 </tr>
                 <tr>
-                    <td>Invoice Number</td>
-                    <td><input type="text" name="invoiceNum"/></td>
-                </tr>
-                <tr>
                     <td>Comments</td>
                     <td><input type="text" name="comments"/></td>
-                </tr>
-                <tr>
-                    <td>Is flyer art approved?</td>
-                    <td>
-                        <br/>
-                        <label>Yes</label><input type="radio" value="1" name="artApprove"/> <br/>
-                        <label>No</label><input type="radio" value="0" name="artApprove"/> <br/>
-                        <br/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Has payment received?</td>
-                    <td>
-                        <br/>
-                        <label>Yes</label><input type="radio" value="1" name="payReceive"/> <br/>
-                        <label>No</label><input type="radio" value="0" name="payReceive"/> <br/>
-                        <br/>
-                    </td>
                 </tr>
 
                 <tr>

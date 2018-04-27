@@ -51,8 +51,10 @@ public class OrderDao {
 
     public int addOrder(Order orderObj) {
         int res = 0;
-        String sql = "INSERT INTO orders (agentId , clientId, flyerQty, flyerLayout, flyerImg, personalCopy, PaymentInformation, invoiceNumber, comments, isFlyerArtApproved, isPaymentReceived)"
+        String sql = "INSERT INTO orders (agentId , clientId, flyerQty, flyerLayout, flyerImg, personalCopy, paymentInformation, invoiceNumber, comments, isFlyerArtApproved, isPaymentReceived)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql2 = "INSERT INTO locationxorders (orderId, locationId) "
+                + "VALUES (?, ?)";
         try (Connection conn = getConnection()) {
 
             if (conn != null) {
@@ -69,6 +71,15 @@ public class OrderDao {
                 stmt.setBoolean(10, orderObj.getIsFlyerArtApproved());
                 stmt.setBoolean(11, orderObj.getIsPaymentReceived());
                 res = stmt.executeUpdate();
+            }
+
+            if (conn != null) {
+                for (int i = 0; i < orderObj.getLocation().length; i++) {
+                    PreparedStatement stmt = conn.prepareStatement(sql2);
+                    stmt.setInt(1, getOrderId());
+                    stmt.setInt(2, orderObj.getLocation()[i]);
+                    res = stmt.executeUpdate();
+                }
             }
 
         } catch (SQLException sqlEx) {
@@ -164,6 +175,7 @@ public class OrderDao {
                 orderObj.setFlyerLayout(result.getString("flyerLayout"));
                 orderObj.setFlyerImgBase64(encodeImage(result.getBlob("flyerImg").getBytes(1, flyerImgLength)));
                 orderObj.setPersonalCopy(result.getInt("personalCopy"));
+                orderObj.setLocation(getLocations(ID));
                 orderObj.setPaymentInfo(result.getString("paymentInformation"));
                 orderObj.setInvoiceNum(result.getInt("invoiceNumber"));
                 orderObj.setComments(result.getString("comments"));
@@ -251,8 +263,73 @@ public class OrderDao {
             imgs = flyerImg.getBytes(1, flyerImgLength);
         }
 
-        
-        
         return imgs;
+    }
+
+    public int getInvoiceNum() throws SQLException {
+        String sql = "SELECT MAX(invoiceNumber) FROM orders";
+        ResultSet result;
+
+        int invoiceNum = 1;
+
+        try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            result = statement.executeQuery();
+
+            result.next();
+
+            int test = result.getInt("MAX(invoiceNumber)");
+
+            if (test != 0) {
+                invoiceNum = test + 1;
+            }
+        }
+
+        return invoiceNum;
+    }
+
+    public int getOrderId() throws SQLException {
+        String sql = "SELECT MAX(id) FROM orders";
+        ResultSet result;
+
+        int invoiceNum = 1;
+
+        try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
+
+            result = statement.executeQuery();
+
+            result.next();
+
+            int test = result.getInt("MAX(id)");
+
+            if (test != 0) {
+                invoiceNum = test;
+            }
+        }
+
+        return invoiceNum;
+    }
+    
+    public int[] getLocations(int id) throws SQLException {
+        String sql = "SELECT locationId FROM locationxorders "
+                + "WHERE orderId = ?";
+        ResultSet result;
+
+        
+
+        try (Connection conn = getConnection(); PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            result = statement.executeQuery();
+            int[] invoiceNum = {};
+
+            while (result.next()) {
+                int i = 0;
+                invoiceNum[i] = result.getInt("locationId");
+                i++;
+            }
+            return invoiceNum;
+        }
+
+        
     }
 }

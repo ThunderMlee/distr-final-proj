@@ -11,6 +11,12 @@
     <c:redirect url="SiteLogin.jsp"/>
 </c:if>
 
+<c:if test="${requestScope.agentList == null}">
+    <c:redirect url="/ClientServlet">
+        <c:param name="client" value="getList"/>
+    </c:redirect>
+</c:if> 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -25,8 +31,14 @@
             <input type="hidden" name="client" value="add"/>
             <table>
                 <tr>
-                    <td>Agent ID:</td>
-                    <td><input type="text" name="agentId" value="${client.agentId}"/></td>
+                    <td>Agent:</td>
+                    <td><input type="text" name="agentId" value="${client.agentId}"/>
+                        <select name="agentId">
+                            <c:forEach var="agent" items="${agentList}">
+                                <option value="${agent.ID}">${agent.fName} ${agent.lName}</option>
+                            </c:forEach>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td>First Name:</td>
